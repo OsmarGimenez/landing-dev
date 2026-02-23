@@ -16,7 +16,23 @@ import {
   ShieldCheck,
   Zap,
   ArrowRight,
-  Lock
+  Lock,
+  Sun,
+  Moon,
+  Target,
+  Brain,
+  Lightbulb,
+  FileText,
+  Download,
+  Coffee,
+  Leaf,
+  Palette,
+  Box,
+  GitBranch,
+  Activity,
+  RefreshCw,
+  Braces,
+  Layout
 } from 'lucide-react';
 
 export const ICONS = {
@@ -37,64 +53,92 @@ export const ICONS = {
   ShieldCheck,
   Zap,
   ArrowRight,
-  Lock
+  Lock,
+  Sun,
+  Moon,
+  Target,
+  Brain,
+  Lightbulb,
+  FileText,
+  Download,
+  Coffee,
+  Leaf,
+  Palette,
+  Box,
+  GitBranch,
+  Activity,
+  RefreshCw,
+  Braces,
+  Layout
 };
 
 export const SERVICES = [
   {
-    title: "E-commerce Systems",
-    description: "High-performance digital storefronts optimized for speed, SEO, and conversion. Built with React and Next.js.",
+    title: "Landing Pages",
+    description: "High-conversion landing pages designed for speed and impact.",
+    icon: "Globe",
+    tags: ["React", "Tailwind CSS", "Framer Motion"],
+    mockup: "https://picsum.photos/seed/landing/600/400",
+    color: "cyan"
+  },
+  {
+    title: "Web Catalogs",
+    description: "Professional digital catalogs to showcase your products effectively.",
+    icon: "Layers",
+    tags: ["Next.js", "Flutter Web"],
+    mockup: "https://picsum.photos/seed/catalog/600/400",
+    color: "indigo"
+  },
+  {
+    title: "E-commerce Solutions",
+    description: "Full shopping cycles and scalable online stores.",
     icon: "Rocket",
-    tags: ["React", "Next.js", "Tailwind"],
-    mockup: "https://picsum.photos/seed/ecommerce/600/400"
+    tags: ["React", "Stripe/Payments", "Node.js"],
+    mockup: "https://picsum.photos/seed/shop/600/400",
+    color: "rose"
   },
   {
     title: "API Architectures",
-    description: "Robust server-side logic and seamless third-party integrations using Laravel, Python, and C#.",
+    description: "Secure and scalable backends for your applications.",
     icon: "Server",
-    tags: ["Laravel", "Python", "C#", "Node.js"],
-    mockup: "https://picsum.photos/seed/api/600/400"
+    tags: ["Laravel", "Python", "C#", "Java"],
+    mockup: "https://picsum.photos/seed/api/600/400",
+    color: "amber"
   },
   {
-    title: "Database Dashboards",
-    description: "Fine-tuning complex database systems and building intuitive management dashboards for PostgreSQL and Oracle.",
+    title: "Database Optimization",
+    description: "High-performance data management and integrity.",
     icon: "Database",
-    tags: ["PostgreSQL", "Oracle", "SQL Server"],
-    mockup: "https://picsum.photos/seed/database/600/400"
+    tags: ["PostgreSQL", "MySQL", "Oracle", "SQL Server"],
+    mockup: "https://picsum.photos/seed/dbopt/600/400",
+    color: "emerald"
   },
   {
     title: "Automations & CI/CD",
-    description: "Streamlining workflows and ensuring reliable delivery with Docker, Linux, and modern CI/CD practices.",
+    description: "Efficiency and reliable software delivery.",
     icon: "Zap",
-    tags: ["Docker", "Linux", "CI/CD"],
-    mockup: "https://picsum.photos/seed/automation/600/400"
+    tags: ["Docker", "GitHub Actions", "Linux", "CI/CD"],
+    mockup: "https://picsum.photos/seed/cicd/600/400",
+    color: "sky"
   }
 ];
 
 export const WHY_ME = [
   {
-    title: "5+ Years Experience",
-    description: "A solid track record of building and maintaining enterprise-grade software solutions.",
+    title: "Experience",
     icon: "ShieldCheck",
-    size: "large"
   },
   {
-    title: "+25 Projects Delivered",
-    description: "From small business tools to large-scale systems, I deliver results that matter.",
-    icon: "CheckCircle2",
-    size: "small"
+    title: "Delivered Projects",
+    icon: "Rocket",
   },
   {
     title: "Full-Stack Versatility",
-    description: "I handle everything from UI/UX implementation to complex backend logic and server management.",
     icon: "Layers",
-    size: "small"
   },
   {
-    title: "Problem Solver",
-    description: "Focused on finding the most efficient solution for your business growth.",
-    icon: "Rocket",
-    size: "medium"
+    title: "Strategic Problem Solver",
+    icon: "Brain",
   }
 ];
 
@@ -102,22 +146,52 @@ export const TECH_STACK = [
   {
     category: "Backend",
     icon: "Server",
-    items: ["PHP", "Laravel", "Python", "Django", "FastAPI", "C#", "Java", "Spring Boot", "Node.js"]
+    items: [
+      { name: "PHP", icon: "Code2", color: "#777BB4" },
+      { name: "Laravel", icon: "Zap", color: "#FF2D20" },
+      { name: "Python", icon: "Terminal", color: "#3776AB" },
+      { name: "Django", icon: "ShieldCheck", color: "#092E20" },
+      { name: "FastAPI", icon: "Zap", color: "#05998B" },
+      { name: "C#", icon: "Code2", color: "#239120" },
+      { name: "Java", icon: "Coffee", color: "#007396" },
+      { name: "Spring Boot", icon: "Leaf", color: "#6DB33F" },
+      { name: "Node.js", icon: "Server", color: "#339933" }
+    ]
   },
   {
     category: "Frontend",
-    icon: "Layers",
-    items: ["TypeScript", "JavaScript", "React", "Next.js", "Flutter", "Tailwind CSS"]
+    icon: "Layout",
+    items: [
+      { name: "TypeScript", icon: "Code2", color: "#3178C6" },
+      { name: "JavaScript", icon: "Code2", color: "#F7DF1E" },
+      { name: "React", icon: "Cpu", color: "#61DAFB" },
+      { name: "Next.js", icon: "Globe", color: "#000000" },
+      { name: "Flutter", icon: "Layers", color: "#02569B" },
+      { name: "Tailwind CSS", icon: "Palette", color: "#06B6D4" }
+    ]
   },
   {
     category: "Databases",
     icon: "Database",
-    items: ["PostgreSQL", "Oracle", "SQL Server", "MySQL", "SQLite", "Redis"]
+    items: [
+      { name: "PostgreSQL", icon: "Database", color: "#4169E1" },
+      { name: "Oracle", icon: "Database", color: "#F80000" },
+      { name: "SQL Server", icon: "Database", color: "#CC2927" },
+      { name: "MySQL", icon: "Database", color: "#4479A1" },
+      { name: "SQLite", icon: "Database", color: "#003B57" },
+      { name: "Redis", icon: "Zap", color: "#DC382D" }
+    ]
   },
   {
     category: "DevOps & Tools",
     icon: "Terminal",
-    items: ["Docker", "Linux", "Git", "GitHub Actions", "CI/CD"]
+    items: [
+      { name: "Docker", icon: "Box", color: "#2496ED" },
+      { name: "Linux", icon: "Terminal", color: "#FCC624" },
+      { name: "Git", icon: "GitBranch", color: "#F05032" },
+      { name: "GitHub Actions", icon: "Activity", color: "#2088FF" },
+      { name: "CI/CD", icon: "RefreshCw", color: "#000000" }
+    ]
   }
 ];
 

@@ -4,16 +4,36 @@
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Poppins", sans-serif;
   
-  --color-brand-bg: #030712;
+  --color-brand-bg: var(--bg);
   --color-brand-primary: #3B82F6;
   --color-brand-secondary: #10B981;
-  --color-brand-text: #F9FAFB;
-  --color-brand-muted: #9CA3AF;
+  --color-brand-text: var(--text);
+  --color-brand-muted: var(--muted);
+  --color-brand-border: var(--border);
+  --color-brand-card: var(--card-bg);
+}
+
+:root {
+  --bg: #F8FAFC;
+  --text: #0F172A;
+  --muted: #475569;
+  --border: rgba(15, 23, 42, 0.1);
+  --card-bg: rgba(15, 23, 42, 0.03);
+  --grid-color: rgba(15, 23, 42, 0.05);
+}
+
+.dark {
+  --bg: #030712;
+  --text: #F9FAFB;
+  --muted: #9CA3AF;
+  --border: rgba(255, 255, 255, 0.1);
+  --card-bg: rgba(255, 255, 255, 0.03);
+  --grid-color: rgba(255, 255, 255, 0.05);
 }
 
 @layer base {
   body {
-    @apply bg-brand-bg text-brand-text font-sans antialiased selection:bg-brand-primary/30 overflow-x-hidden;
+    @apply bg-brand-bg text-brand-text font-sans antialiased selection:bg-brand-primary/30 overflow-x-hidden transition-colors duration-500;
   }
   
   h1, h2, h3, h4, h5, h6 {
@@ -27,7 +47,7 @@
 }
 
 .glass-card {
-  @apply bg-white/[0.03] backdrop-blur-md border border-white/10 rounded-2xl;
+  @apply bg-brand-card backdrop-blur-md border border-brand-border rounded-2xl;
 }
 
 .btn-primary {
@@ -43,17 +63,18 @@
 }
 
 .spotlight-card {
-  @apply relative overflow-hidden bg-white/[0.03] border border-white/10 rounded-2xl transition-all duration-500 hover:scale-[1.02] hover:border-brand-primary/30;
+  @apply relative overflow-hidden bg-brand-card border border-brand-border rounded-2xl transition-all duration-500 hover:border-brand-primary/30;
 }
 
 .spotlight-glow {
   @apply pointer-events-none absolute -inset-px opacity-0 transition-opacity duration-300 z-10;
-  background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(59, 130, 246, 0.15), transparent 40%);
+  background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), var(--glow-color, rgba(59, 130, 246, 0.15)), transparent 40%);
+  mix-blend-mode: var(--glow-blend, normal);
 }
 
 .border-glow {
   @apply pointer-events-none absolute -inset-px opacity-0 transition-opacity duration-300 z-0;
-  background: radial-gradient(400px circle at var(--mouse-x) var(--mouse-y), rgba(59, 130, 246, 0.4), transparent 40%);
+  background: radial-gradient(400px circle at var(--mouse-x) var(--mouse-y), var(--border-glow-color, rgba(59, 130, 246, 0.4)), transparent 40%);
   padding: 1px;
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask-composite: exclude;
@@ -81,6 +102,34 @@
   animation: blob 7s infinite alternate;
 }
 
+@keyframes shine {
+  0% { left: -100%; }
+  20% { left: 100%; }
+  100% { left: 100%; }
+}
+
+.animate-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.animate-shine::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transform: skewX(-25deg);
+  animation: shine 5s infinite;
+}
+
 .animation-delay-2000 {
   animation-delay: 2s;
 }
@@ -90,12 +139,12 @@
 }
 
 .bg-grid-pattern {
-  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-image: radial-gradient(circle, var(--grid-color) 1px, transparent 1px);
   background-size: 30px 30px;
 }
 
 .bg-dot-pattern {
-  background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+  background-image: radial-gradient(var(--grid-color) 1px, transparent 1px);
   background-size: 20px 20px;
 }
 

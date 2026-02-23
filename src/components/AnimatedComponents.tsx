@@ -74,7 +74,7 @@ export const Noise = () => (
 );
 
 // --- Reveal Text Component ---
-export const RevealText = ({ text, className = "" }: { text: string, className?: string }) => {
+export const RevealText = ({ text, className = "" }: { text: string, className?: string, key?: React.Key }) => {
   const words = text.split(" ");
   
   return (
@@ -104,9 +104,17 @@ export const SpotlightCard = ({ children, className = "" }: BaseProps) => {
   const divRef = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [opacity, setOpacity] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!divRef.current) return;
+    if (!divRef.current || isMobile) return;
 
     const div = divRef.current;
     const rect = div.getBoundingClientRect();
@@ -114,47 +122,65 @@ export const SpotlightCard = ({ children, className = "" }: BaseProps) => {
     setPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
   };
 
+  const CardContent = (
+    <div
+      ref={divRef}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => !isMobile && setOpacity(1)}
+      onMouseLeave={() => setOpacity(0)}
+      className={`spotlight-card group/card h-full ${className}`}
+      style={{
+        '--mouse-x': `${position.x}px`,
+        '--mouse-y': `${position.y}px`,
+      } as React.CSSProperties}
+    >
+      {!isMobile && <div className="spotlight-glow" style={{ opacity }} />}
+      {!isMobile && <div className="border-glow" style={{ opacity }} />}
+      <div className="relative z-20 h-full w-full">
+        {children}
+      </div>
+    </div>
+  );
+
+  if (isMobile) return CardContent;
+
   return (
     <TiltCard className="h-full">
-      <div
-        ref={divRef}
-        onMouseMove={handleMouseMove}
-        onMouseEnter={() => setOpacity(1)}
-        onMouseLeave={() => setOpacity(0)}
-        className={`spotlight-card group/card h-full ${className}`}
-        style={{
-          '--mouse-x': `${position.x}px`,
-          '--mouse-y': `${position.y}px`,
-        } as React.CSSProperties}
-      >
-        <div className="spotlight-glow" style={{ opacity }} />
-        <div className="border-glow" style={{ opacity }} />
-        <div className="relative z-20 h-full w-full">
-          {children}
-        </div>
-      </div>
+      {CardContent}
     </TiltCard>
   );
 };
 
 // --- Mouse Follower Background ---
-export const MouseFollower = () => {
+export const MouseFollower = ({ theme }: { theme: 'light' | 'dark' }) => {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
     const handleMouseMove = (e: MouseEvent) => {
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
     };
     window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('resize', checkMobile);
+    };
   }, [mouseX, mouseY]);
 
   const background = useTransform(
     [mouseX, mouseY],
-    ([x, y]) => `radial-gradient(1200px circle at ${x}px ${y}px, rgba(30, 41, 59, 0.4), transparent 80%)`
+    ([x, y]) => theme === 'dark' 
+      ? `radial-gradient(1200px circle at ${x}px ${y}px, rgba(30, 41, 59, 0.4), transparent 80%)`
+      : `radial-gradient(600px circle at ${x}px ${y}px, rgba(255, 255, 255, 0.05), transparent 80%)`
   );
+
+  if (isMobile) return null;
 
   return (
     <motion.div 
@@ -188,7 +214,7 @@ export const FloatingShapes = () => {
           repeat: Infinity,
           ease: "linear"
         }}
-        className="absolute top-[10%] left-[5%] w-32 h-32 border border-white/5 rounded-full"
+        className="absolute top-[10%] left-[5%] w-32 h-32 border border-brand-border rounded-full"
       />
       <motion.div
         animate={{
@@ -200,7 +226,7 @@ export const FloatingShapes = () => {
           repeat: Infinity,
           ease: "linear"
         }}
-        className="absolute top-[40%] right-[10%] w-64 h-64 border border-white/5 rounded-3xl"
+        className="absolute top-[40%] right-[10%] w-64 h-64 border border-brand-border rounded-3xl"
       />
       <motion.div
         animate={{
@@ -212,7 +238,7 @@ export const FloatingShapes = () => {
           repeat: Infinity,
           ease: "linear"
         }}
-        className="absolute bottom-[20%] left-[15%] w-48 h-48 border border-white/5 rotate-45"
+        className="absolute bottom-[20%] left-[15%] w-48 h-48 border border-brand-border rotate-45"
       />
     </div>
   );
