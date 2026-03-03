@@ -396,7 +396,7 @@ export default function App() {
                   <Player
                     autoplay
                     loop
-                    src={techData}
+                    src={technologyData}
                     style={{ height: '100%', width: '100%' }}
                     className="relative"
                   />
