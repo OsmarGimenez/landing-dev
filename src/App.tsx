@@ -1,5 +1,6 @@
 import { motion, useScroll, useTransform } from 'motion/react';
 import React, { useState, useEffect, useRef } from 'react';
+import { Player } from '@lottiefiles/react-lottie-player';
 import { ICONS, SERVICES, WHY_ME, TECH_STACK, CONTACT_INFO } from './constants';
 import { 
   Typewriter, 
@@ -256,11 +257,13 @@ export default function App() {
         </div>
         
         <div className="max-w-7xl mx-auto px-6 w-full">
-          <div className="max-w-4xl">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
+            {/* Left Column: Content */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
+              className="flex flex-col items-start text-left"
             >
               <motion.span 
                 initial={{ opacity: 0 }}
@@ -271,7 +274,7 @@ export default function App() {
                 <span className="w-2 h-2 rounded-full bg-brand-primary animate-pulse" />
                 {content.badge}
               </motion.span>
-              <h1 className="text-3xl sm:text-4xl md:text-6xl font-display font-bold mb-6 sm:mb-8 leading-[1.2] md:leading-[1.1] tracking-tight text-balance">
+              <h1 className="text-3xl sm:text-4xl md:text-6xl font-display font-bold mb-6 sm:mb-8 leading-[1.2] md:leading-[1.1] tracking-tight text-left text-balance">
                 {lang === 'es' ? (
                   <>
                     Construyo soluciones tecnológicas que <span className="bg-clip-text text-transparent bg-gradient-to-r from-brand-primary to-brand-secondary">impulsan tu crecimiento.</span>
@@ -282,11 +285,13 @@ export default function App() {
                   </>
                 )}
               </h1>
+              
               <RevealText 
                 key={lang}
                 text={content.subtitle}
-                className="text-lg md:text-2xl text-brand-muted mb-10 sm:mb-12 leading-relaxed font-light max-w-3xl"
+                className="text-lg md:text-2xl text-brand-muted leading-relaxed font-light mb-10 sm:mb-12"
               />
+
               <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
                 <MagneticButton className="w-full sm:w-auto">
                   <a href="#contact" className="btn-primary flex items-center justify-center gap-3 px-8 sm:px-10 py-4 sm:py-5 text-base sm:text-lg font-bold w-full sm:w-auto">
@@ -300,6 +305,23 @@ export default function App() {
                 </MagneticButton>
               </div>
             </motion.div>
+
+            {/* Right Column: The Animation (Red Zone) */}
+            <div className="flex justify-center items-center relative w-full h-[350px] md:h-[450px]">
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 1 }}
+                className="relative w-full h-full max-w-[450px] flex justify-center items-center transition-all duration-500 [filter:drop-shadow(0_0_15px_rgba(59,130,246,0.1))_hue-rotate(-20deg)_opacity(0.8)] dark:[filter:drop-shadow(0_0_30px_rgba(59,130,246,0.3))_hue-rotate(-20deg)_saturate(1.4)]"
+              >
+                <Player
+                  autoplay
+                  loop
+                  src="https://raw.githubusercontent.com/OsmarGimenez/portfolio-dev/main/public/Technology.json"
+                  style={{ height: '100%', width: '100%' }}
+                />
+              </motion.div>
+            </div>
           </div>
         </div>
       </section>
@@ -590,16 +612,16 @@ export default function App() {
       </motion.section>
 
       {/* Footer */}
-      <footer className="py-20 border-t border-brand-border bg-white dark:bg-black/40 backdrop-blur-none dark:backdrop-blur-xl">
+      <footer className="relative z-10 py-20 border-t border-brand-border bg-white dark:bg-black/40">
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-12 text-center md:text-left">
           <div className="flex flex-col items-center md:items-start">
             <span className="text-2xl font-display font-bold tracking-tighter text-brand-primary mb-4">
               OSMAR<span className="text-brand-text">.</span>GIMENEZ
             </span>
-            <p className="text-base text-[#000000] dark:text-slate-400 max-w-xs mb-8 font-bold dark:font-normal">
+            <p className="text-base text-black dark:text-slate-400 max-w-xs mb-8 font-black dark:font-normal">
               {content.footerText}
             </p>
-            <p className="text-xs tracking-widest font-bold text-[#000000] dark:text-slate-500 uppercase">
+            <p className="text-xs tracking-widest font-black text-black dark:text-slate-500 uppercase">
               {content.copyright}
             </p>
           </div>
@@ -611,7 +633,7 @@ export default function App() {
               rel="noopener noreferrer" 
               className="group relative p-4 bg-slate-100 dark:bg-white/5 rounded-2xl border border-slate-300 dark:border-white/10 transition-all duration-300 hover:border-slate-500 dark:hover:border-white/30 hover:shadow-xl dark:hover:shadow-[0_0_20px_rgba(255,255,255,0.1)]"
             >
-              <ICONS.Github size={32} className="text-[#000000] dark:text-slate-400 group-hover:text-black dark:group-hover:text-white transition-colors" />
+              <ICONS.Github size={32} className="text-black dark:text-slate-400 group-hover:text-black dark:group-hover:text-white transition-colors" />
             </a>
             <a 
               href={CONTACT_INFO.linkedin} 
@@ -619,7 +641,7 @@ export default function App() {
               rel="noopener noreferrer" 
               className="group relative p-4 bg-brand-primary/10 dark:bg-brand-primary/5 rounded-2xl border border-brand-primary/30 dark:border-brand-primary/10 transition-all duration-300 hover:border-brand-primary/50 dark:hover:border-brand-primary/30 hover:shadow-xl dark:hover:shadow-[0_0_20px_rgba(59,130,246,0.2)]"
             >
-              <ICONS.Linkedin size={32} className="text-[#000000] dark:text-slate-400 group-hover:text-[#0077B5] dark:group-hover:text-brand-primary transition-colors" />
+              <ICONS.Linkedin size={32} className="text-black dark:text-slate-400 group-hover:text-[#0077B5] dark:group-hover:text-brand-primary transition-colors" />
             </a>
           </div>
         </div>
