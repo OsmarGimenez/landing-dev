@@ -1,4 +1,4 @@
-{
+export const technologyData ={
   "v": "5.5.2",
   "fr": 30,
   "ip": 0,
@@ -76,4 +76,4 @@
       "bm": 0
     }
   ]
-}
+};
