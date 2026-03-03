@@ -1,6 +1,8 @@
 import { motion, useScroll, useTransform } from 'motion/react';
 import React, { useState, useEffect, useRef } from 'react';
 import { Player } from '@lottiefiles/react-lottie-player';
+import technologyAnim from './Technology.json';
+import cvFile from './EL_NOMBRE_DE_TU_ARCHIVO.pdf';
 import { ICONS, SERVICES, WHY_ME, TECH_STACK, CONTACT_INFO } from './constants';
 import { 
   Typewriter, 
@@ -307,20 +309,15 @@ export default function App() {
             </motion.div>
 
             {/* Right Column: The Animation (Red Zone) */}
-            <div className="flex justify-center items-center relative w-full h-[350px] md:h-[450px]">
-              <motion.div 
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 1 }}
-                className="relative w-full h-full max-w-[450px] flex justify-center items-center transition-all duration-500 [filter:drop-shadow(0_0_15px_rgba(59,130,246,0.1))_hue-rotate(-20deg)_opacity(0.8)] dark:[filter:drop-shadow(0_0_30px_rgba(59,130,246,0.3))_hue-rotate(-20deg)_saturate(1.4)]"
-              >
+            <div className="hidden lg:flex justify-center items-center relative w-full h-[450px]">
+              <div className="relative mx-auto flex justify-center items-center w-full max-w-[400px] h-[400px]">
                 <Player
                   autoplay
                   loop
-                  src="https://raw.githubusercontent.com/OsmarGimenez/portfolio-dev/main/public/Technology.json"
+                  src={technologyAnim}
                   style={{ height: '100%', width: '100%' }}
                 />
-              </motion.div>
+              </div>
             </div>
           </div>
         </div>
@@ -469,9 +466,9 @@ export default function App() {
                   {content.cvSubtitle}
                 </p>
                 <MagneticButton>
-                  <button className="btn-primary animate-shine flex items-center gap-4 px-10 py-5 text-lg font-bold group">
+                  <a href={cvFile} download="CV_Osmar_Gimenez.pdf" className="btn-primary animate-shine flex items-center justify-center gap-3 px-6 py-3 text-base font-bold group w-fit mx-auto md:mx-0" target="_blank" rel="noopener noreferrer">
                     <ICONS.Download size={24} className="group-hover:translate-y-1 transition-transform" /> {content.cvButton}
-                  </button>
+                  </a>
                 </MagneticButton>
               </div>
               <div className="flex justify-center md:justify-end">
