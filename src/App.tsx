@@ -1,8 +1,7 @@
 import { motion, useScroll, useTransform } from 'motion/react';
 import React, { useState, useEffect, useRef } from 'react';
 import { Player } from '@lottiefiles/react-lottie-player';
-import technologyAnim from './Technology.json';
-import cvFile from './EL_NOMBRE_DE_TU_ARCHIVO.pdf';
+import cvFile from './CV-Osmar-Gimenez.pdf';
 import { ICONS, SERVICES, WHY_ME, TECH_STACK, CONTACT_INFO } from './constants';
 import { 
   Typewriter, 
@@ -17,6 +16,88 @@ import {
 } from './components/AnimatedComponents';
 
 export default function App() {
+
+  const technologyData ={
+    "v": "5.5.2",
+    "fr": 30,
+    "ip": 0,
+    "op": 60,
+    "w": 500,
+    "h": 500,
+    "nm": "Tech Animation",
+    "ddd": 0,
+    "assets": [],
+    "layers": [
+      {
+        "ddd": 0,
+        "ind": 1,
+        "ty": 4,
+        "nm": "Circle",
+        "sr": 1,
+        "ks": {
+          "o": { "a": 0, "k": 100, "ix": 11 },
+          "r": { "a": 1, "k": [{ "i": { "x": [0.833], "y": [0.833] }, "o": { "x": [0.167], "y": [0.167] }, "t": 0, "s": [0] }, { "t": 60, "s": [360] }], "ix": 10 },
+          "p": { "a": 0, "k": [250, 250, 0], "ix": 2 },
+          "a": { "a": 0, "k": [0, 0, 0], "ix": 1 },
+          "s": { "a": 0, "k": [100, 100, 100], "ix": 6 }
+        },
+        "ao": 0,
+        "shapes": [
+          {
+            "ty": "gr",
+            "it": [
+              {
+                "d": 1,
+                "ty": "el",
+                "s": { "a": 0, "k": [200, 200], "ix": 2 },
+                "p": { "a": 0, "k": [0, 0], "ix": 3 },
+                "nm": "Ellipse Path 1",
+                "mn": "ADBE Vector Shape - Ellipse",
+                "hd": false
+              },
+              {
+                "ty": "st",
+                "c": { "a": 0, "k": [0.23, 0.51, 0.96, 1], "ix": 3 },
+                "o": { "a": 0, "k": 100, "ix": 4 },
+                "w": { "a": 0, "k": 10, "ix": 5 },
+                "lc": 1,
+                "lj": 1,
+                "ml": 4,
+                "bm": 0,
+                "nm": "Stroke 1",
+                "mn": "ADBE Vector Graphic - Stroke",
+                "hd": false
+              },
+              {
+                "ty": "tr",
+                "p": { "a": 0, "k": [0, 0], "ix": 2 },
+                "a": { "a": 0, "k": [0, 0], "ix": 1 },
+                "s": { "a": 0, "k": [100, 100], "ix": 3 },
+                "r": { "a": 0, "k": 0, "ix": 6 },
+                "o": { "a": 0, "k": 100, "ix": 7 },
+                "sk": { "a": 0, "k": 0, "ix": 4 },
+                "sa": { "a": 0, "k": 0, "ix": 5 },
+                "nm": "Transform"
+              }
+            ],
+            "nm": "Group 1",
+            "np": 2,
+            "cix": 2,
+            "bm": 0,
+            "ix": 1,
+            "mn": "ADBE Vector Group",
+            "hd": false
+          }
+        ],
+        "ip": 0,
+        "op": 60,
+        "st": 0,
+        "bm": 0
+      }
+    ]
+  };
+  
+
   const [theme, setTheme] = useState<'light' | 'dark'>('dark');
   const [lang, setLang] = useState<'en' | 'es'>('en');
 
@@ -309,16 +390,18 @@ export default function App() {
             </motion.div>
 
             {/* Right Column: The Animation (Red Zone) */}
-            <div className="hidden lg:flex justify-center items-center relative w-full h-[450px]">
-              <div className="relative mx-auto flex justify-center items-center w-full max-w-[400px] h-[400px]">
-                <Player
-                  autoplay
-                  loop
-                  src={technologyAnim}
-                  style={{ height: '100%', width: '100%' }}
-                />
+            {/* Right Column: The Animation (Fixed) */}
+              <div className="hidden lg:flex justify-center items-center relative w-full h-[450px]">
+                <div className="relative mx-auto flex justify-center items-center w-full max-w-[400px] h-[400px]">
+                  <Player
+                    autoplay
+                    loop
+                    src={techData}
+                    style={{ height: '100%', width: '100%' }}
+                    className="relative"
+                  />
+                </div>
               </div>
-            </div>
           </div>
         </div>
       </section>
