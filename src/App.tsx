@@ -2,6 +2,7 @@ import { motion, useScroll, useTransform } from 'motion/react';
 import React, { useState, useEffect, useRef } from 'react';
 import { Player } from '@lottiefiles/react-lottie-player';
 import cvFile from './CV-Osmar-Gimenez.pdf';
+import technologyData from './assets/Technology.json';
 import { ICONS, SERVICES, WHY_ME, TECH_STACK, CONTACT_INFO } from './constants';
 import { 
   Typewriter, 
@@ -17,85 +18,6 @@ import {
 
 export default function App() {
 
-  const technologyData ={
-    "v": "5.5.2",
-    "fr": 30,
-    "ip": 0,
-    "op": 60,
-    "w": 500,
-    "h": 500,
-    "nm": "Tech Animation",
-    "ddd": 0,
-    "assets": [],
-    "layers": [
-      {
-        "ddd": 0,
-        "ind": 1,
-        "ty": 4,
-        "nm": "Circle",
-        "sr": 1,
-        "ks": {
-          "o": { "a": 0, "k": 100, "ix": 11 },
-          "r": { "a": 1, "k": [{ "i": { "x": [0.833], "y": [0.833] }, "o": { "x": [0.167], "y": [0.167] }, "t": 0, "s": [0] }, { "t": 60, "s": [360] }], "ix": 10 },
-          "p": { "a": 0, "k": [250, 250, 0], "ix": 2 },
-          "a": { "a": 0, "k": [0, 0, 0], "ix": 1 },
-          "s": { "a": 0, "k": [100, 100, 100], "ix": 6 }
-        },
-        "ao": 0,
-        "shapes": [
-          {
-            "ty": "gr",
-            "it": [
-              {
-                "d": 1,
-                "ty": "el",
-                "s": { "a": 0, "k": [200, 200], "ix": 2 },
-                "p": { "a": 0, "k": [0, 0], "ix": 3 },
-                "nm": "Ellipse Path 1",
-                "mn": "ADBE Vector Shape - Ellipse",
-                "hd": false
-              },
-              {
-                "ty": "st",
-                "c": { "a": 0, "k": [0.23, 0.51, 0.96, 1], "ix": 3 },
-                "o": { "a": 0, "k": 100, "ix": 4 },
-                "w": { "a": 0, "k": 10, "ix": 5 },
-                "lc": 1,
-                "lj": 1,
-                "ml": 4,
-                "bm": 0,
-                "nm": "Stroke 1",
-                "mn": "ADBE Vector Graphic - Stroke",
-                "hd": false
-              },
-              {
-                "ty": "tr",
-                "p": { "a": 0, "k": [0, 0], "ix": 2 },
-                "a": { "a": 0, "k": [0, 0], "ix": 1 },
-                "s": { "a": 0, "k": [100, 100], "ix": 3 },
-                "r": { "a": 0, "k": 0, "ix": 6 },
-                "o": { "a": 0, "k": 100, "ix": 7 },
-                "sk": { "a": 0, "k": 0, "ix": 4 },
-                "sa": { "a": 0, "k": 0, "ix": 5 },
-                "nm": "Transform"
-              }
-            ],
-            "nm": "Group 1",
-            "np": 2,
-            "cix": 2,
-            "bm": 0,
-            "ix": 1,
-            "mn": "ADBE Vector Group",
-            "hd": false
-          }
-        ],
-        "ip": 0,
-        "op": 60,
-        "st": 0,
-        "bm": 0
-      }
-    ]
-  };
   
 
   const [theme, setTheme] = useState<'light' | 'dark'>('dark');
@@ -698,7 +620,7 @@ export default function App() {
             <span className="text-2xl font-display font-bold tracking-tighter text-brand-primary mb-4">
               OSMAR<span className="text-brand-text">.</span>GIMENEZ
             </span>
-            <p className="text-base text-black dark:text-slate-400 max-w-xs mb-8 font-black dark:font-normal">
+            <p className="text-base text-black dark:text-slate-500 max-w-xs mb-8 font-black dark:font-normal">
               {content.footerText}
             </p>
             <p className="text-xs tracking-widest font-black text-black dark:text-slate-500 uppercase">
@@ -713,7 +635,7 @@ export default function App() {
               rel="noopener noreferrer" 
               className="group relative p-4 bg-slate-100 dark:bg-white/5 rounded-2xl border border-slate-300 dark:border-white/10 transition-all duration-300 hover:border-slate-500 dark:hover:border-white/30 hover:shadow-xl dark:hover:shadow-[0_0_20px_rgba(255,255,255,0.1)]"
             >
-              <ICONS.Github size={32} className="text-black dark:text-slate-400 group-hover:text-black dark:group-hover:text-white transition-colors" />
+              <ICONS.Github size={32} className="text-black dark:text-slate-400 group-hover:text-black dark:group-hover:text-white transition-colors !stroke-[2.5px] dark:!stroke-2" />
             </a>
             <a 
               href={CONTACT_INFO.linkedin} 
@@ -721,7 +643,7 @@ export default function App() {
               rel="noopener noreferrer" 
               className="group relative p-4 bg-brand-primary/10 dark:bg-brand-primary/5 rounded-2xl border border-brand-primary/30 dark:border-brand-primary/10 transition-all duration-300 hover:border-brand-primary/50 dark:hover:border-brand-primary/30 hover:shadow-xl dark:hover:shadow-[0_0_20px_rgba(59,130,246,0.2)]"
             >
-              <ICONS.Linkedin size={32} className="text-black dark:text-slate-400 group-hover:text-[#0077B5] dark:group-hover:text-brand-primary transition-colors" />
+              <ICONS.Linkedin size={32} className="text-black dark:text-slate-400 group-hover:text-[#0077B5] dark:group-hover:text-brand-primary transition-colors !stroke-[2.5px] dark:!stroke-2" />
             </a>
           </div>
         </div>
