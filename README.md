@@ -1,20 +1,38 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Osmar Giménez | Software Developer Portfolio
 
-# Run and deploy your AI Studio app
+🚀 **[Live Demo: Vercel Link Here]**
 
-This contains everything you need to run your app locally.
+## Sobre el Proyecto
 
-View your app in AI Studio: https://ai.studio/apps/cd40d491-d56c-43c6-b39d-dbec81b78dcb
+Este es un portafolio profesional, moderno y responsivo, diseñado para destacar experiencia, habilidades técnicas y proyectos de desarrollo de software. Cuenta con animaciones fluidas, un modo claro/oscuro dinámico y soporte bilingüe (Español/Inglés) para un alcance global.
 
-## Run Locally
+## Tech Stack
 
-**Prerequisites:**  Node.js
+Este portafolio fue construido utilizando las siguientes tecnologías:
+- **React**
+- **Vite**
+- **Tailwind CSS**
+- **Framer Motion** (Animaciones UI)
+- **Lottie Animations** (Ilustraciones animadas)
 
+## Instalación y Ejecución Local
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+Para correr este proyecto en tu entorno local, sigue estos sencillos pasos:
+
+1. **Clonar el repositorio:**
+   ```bash
+   git clone https://github.com/OsmarGimenez/landing-dev.git
+   cd landing-dev
+   ```
+
+2. **Instalar dependencias:**
+   ```bash
+   npm install
+   ```
+
+3. **Iniciar el servidor de desarrollo:**
+   ```bash
+   npm run dev
+   ```
+
+El sitio estará disponible para visualizar en tu navegador local (normalmente en `http://localhost:5173`).
