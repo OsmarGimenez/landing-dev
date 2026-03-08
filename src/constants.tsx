@@ -78,7 +78,7 @@ export const SERVICES = [
     description: "High-conversion landing pages designed for speed and impact.",
     icon: "Globe",
     tags: ["React", "Tailwind CSS", "Framer Motion"],
-    mockup: "https://picsum.photos/seed/landing/600/400",
+    mockup: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
     color: "cyan"
   },
   {
@@ -86,7 +86,7 @@ export const SERVICES = [
     description: "Professional digital catalogs to showcase your products effectively.",
     icon: "Layers",
     tags: ["Next.js", "Flutter Web"],
-    mockup: "https://picsum.photos/seed/catalog/600/400",
+    mockup: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=800&q=80",
     color: "indigo"
   },
   {
@@ -94,7 +94,7 @@ export const SERVICES = [
     description: "Full shopping cycles and scalable online stores.",
     icon: "Rocket",
     tags: ["React", "Stripe/Payments", "Node.js"],
-    mockup: "https://picsum.photos/seed/shop/600/400",
+    mockup: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80",
     color: "rose"
   },
   {
@@ -102,7 +102,7 @@ export const SERVICES = [
     description: "Secure and scalable backends for your applications.",
     icon: "Server",
     tags: ["Laravel", "Python", "C#", "Java"],
-    mockup: "https://picsum.photos/seed/api/600/400",
+    mockup: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=80",
     color: "amber"
   },
   {
@@ -110,7 +110,7 @@ export const SERVICES = [
     description: "High-performance data management and integrity.",
     icon: "Database",
     tags: ["PostgreSQL", "MySQL", "Oracle", "SQL Server"],
-    mockup: "https://picsum.photos/seed/dbopt/600/400",
+    mockup: "https://images.unsplash.com/photo-1597852074816-d933c7d2b988?auto=format&fit=crop&w=800&q=80",
     color: "emerald"
   },
   {
@@ -118,7 +118,7 @@ export const SERVICES = [
     description: "Efficiency and reliable software delivery.",
     icon: "Zap",
     tags: ["Docker", "GitHub Actions", "Linux", "CI/CD"],
-    mockup: "https://picsum.photos/seed/cicd/600/400",
+    mockup: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80",
     color: "sky"
   }
 ];

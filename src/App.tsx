@@ -169,7 +169,7 @@ export default function App() {
       contactSecondary: "Perfil de LinkedIn",
       badge1: "Paraguay (Disponible en Remoto)",
       badge2: "Mentalidad Resolutiva",
-      footerText: "Construyendo soluciones digitales que impulsan el crecimiento empresarial.",
+      footerText: "Construyo soluciones tecnológicas que impulsan tu crecimiento.",
       copyright: "© 2026 OSMAR.GIMENEZ. TODOS LOS DERECHOS RESERVADOS."
     }
   };
@@ -208,7 +208,7 @@ export default function App() {
             animate={{ opacity: 1, x: 0 }}
             className="text-lg sm:text-xl font-display font-bold tracking-tighter text-brand-primary shrink-0"
           >
-            OSMAR<span className="text-brand-text">.</span>GIMENEZ
+            OSMAR<span className="text-brand-primary">.</span>GIMENEZ
           </motion.span>
           
           <div className="flex items-center gap-2 sm:gap-6">
@@ -618,12 +618,12 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-12 text-center md:text-left">
           <div className="flex flex-col items-center md:items-start">
             <span className="text-2xl font-display font-bold tracking-tighter text-brand-primary mb-4">
-              OSMAR<span className="text-brand-text">.</span>GIMENEZ
+              OSMAR<span className="text-brand-primary">.</span>GIMENEZ
             </span>
-            <p className="text-base text-black dark:text-slate-500 max-w-xs mb-8 font-black dark:font-normal">
+            <p className="text-base text-slate-950 dark:text-slate-400 max-w-xs mb-8 font-black dark:font-normal">
               {content.footerText}
             </p>
-            <p className="text-xs tracking-widest font-black text-black dark:text-slate-500 uppercase">
+            <p className="text-xs tracking-widest font-black text-slate-950 dark:text-slate-400 uppercase">
               {content.copyright}
             </p>
           </div>
@@ -633,17 +633,17 @@ export default function App() {
               href="https://github.com/OsmarGimenez" 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="group relative p-4 bg-slate-100 dark:bg-white/5 rounded-2xl border border-slate-300 dark:border-white/10 transition-all duration-300 hover:border-slate-500 dark:hover:border-white/30 hover:shadow-xl dark:hover:shadow-[0_0_20px_rgba(255,255,255,0.1)]"
+              className="group relative p-4 bg-slate-100 dark:bg-white/5 rounded-2xl border border-slate-300 dark:border-white/10 transition-all duration-300 hover:border-slate-400 dark:hover:border-slate-500 hover:shadow-xl dark:hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] text-slate-950 dark:text-slate-400"
             >
-              <ICONS.Github size={32} className="text-black dark:text-slate-400 group-hover:text-black dark:group-hover:text-white transition-colors !stroke-[2.5px] dark:!stroke-2" />
+              <ICONS.Github size={32} strokeWidth={2} className="lucide stroke-currentColor transition-colors" />
             </a>
             <a 
               href={CONTACT_INFO.linkedin} 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="group relative p-4 bg-brand-primary/10 dark:bg-brand-primary/5 rounded-2xl border border-brand-primary/30 dark:border-brand-primary/10 transition-all duration-300 hover:border-brand-primary/50 dark:hover:border-brand-primary/30 hover:shadow-xl dark:hover:shadow-[0_0_20px_rgba(59,130,246,0.2)]"
+              className="group relative p-4 bg-brand-primary/10 dark:bg-brand-primary/5 rounded-2xl border border-brand-primary/30 dark:border-brand-primary/10 transition-all duration-300 hover:border-slate-400 dark:hover:border-slate-500 hover:shadow-xl dark:hover:shadow-[0_0_20px_rgba(59,130,246,0.2)] text-slate-950 dark:text-slate-400"
             >
-              <ICONS.Linkedin size={32} className="text-black dark:text-slate-400 group-hover:text-[#0077B5] dark:group-hover:text-brand-primary transition-colors !stroke-[2.5px] dark:!stroke-2" />
+              <ICONS.Linkedin size={32} strokeWidth={2} className="lucide stroke-currentColor transition-colors" />
             </a>
           </div>
         </div>
