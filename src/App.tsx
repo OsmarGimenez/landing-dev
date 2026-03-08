@@ -5,10 +5,8 @@ import cvFile from './CV-Osmar-Gimenez.pdf';
 import technologyData from './assets/Technology.json';
 import { ICONS, SERVICES, WHY_ME, TECH_STACK, CONTACT_INFO } from './constants';
 import { 
-  Typewriter, 
   SpotlightCard, 
   MagneticButton, 
-  TiltCard,
   MouseFollower,
   GridBackground,
   FloatingShapes,
@@ -311,8 +309,7 @@ export default function App() {
               </div>
             </motion.div>
 
-            {/* Right Column: The Animation (Red Zone) */}
-            {/* Right Column: The Animation (Fixed) */}
+            {/* Right Column: The Animation */}
               <div className="hidden lg:flex justify-center items-center relative w-full h-[450px]">
                 <div className="relative mx-auto flex justify-center items-center w-full max-w-[400px] h-[400px]">
                   <Player
