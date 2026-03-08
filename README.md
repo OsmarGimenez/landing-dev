@@ -1,6 +1,6 @@
 # Osmar Giménez | Software Developer Portfolio
 
-🚀 **[Live Demo: Vercel Link Here]**
+🚀 **[Live Demo](https://osmargimenezdev.vercel.app/)**
 
 ## Sobre el Proyecto
 
@@ -35,4 +35,4 @@ Para correr este proyecto en tu entorno local, sigue estos sencillos pasos:
    npm run dev
    ```
 
-El sitio estará disponible para visualizar en tu navegador local (normalmente en `http://localhost:5173`).
+El sitio estará disponible para visualizar en tu navegador local (normalmente en `http://localhost:3000`).
