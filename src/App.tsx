@@ -226,7 +226,7 @@ export default function App() {
               ))}
             </div>
 
-            <div className="flex items-center gap-2 sm:gap-4 md:border-l md:border-brand-border md:pl-8">
+            <div className="flex items-center gap-3 sm:gap-4 md:border-l md:border-brand-border md:pl-8">
               <button 
                 onClick={() => setLang(lang === 'en' ? 'es' : 'en')}
                 className="text-[10px] sm:text-xs font-bold hover:text-brand-primary transition-colors uppercase p-2"
@@ -242,9 +242,9 @@ export default function App() {
             </div>
 
             <MagneticButton>
-              <a href="#contact" className="btn-primary py-2 px-3 sm:px-6 text-xs sm:text-sm font-semibold rounded-lg whitespace-nowrap">
-                <span className="hidden sm:inline">{content.workTogether}</span>
-                <span className="sm:hidden"><ICONS.Mail size={16} /></span>
+              <a href="#contact" className="group flex items-center justify-center sm:btn-primary sm:py-2 sm:px-6 w-10 h-10 sm:w-auto sm:h-auto rounded-full sm:rounded-lg border border-brand-primary/50 sm:border-transparent text-brand-primary sm:text-white hover:bg-brand-primary/5 sm:hover:bg-blue-700 transition-all duration-300">
+                <span className="hidden sm:inline text-sm font-semibold whitespace-nowrap">{content.workTogether}</span>
+                <span className="sm:hidden flex items-center justify-center w-full h-full"><ICONS.Mail size={18} className="group-hover:scale-110 transition-transform" /></span>
               </a>
             </MagneticButton>
           </div>
