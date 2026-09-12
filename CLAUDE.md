@@ -41,6 +41,18 @@ Convenciones al escribir notas:
   actualizarlo con el patrón del error para no repetirlo.
 - **`docs/`** — documentación del proyecto orientada a consumo externo.
 
+## Las dos ramas
+
+El repo mantiene dos versiones vivas del sitio:
+
+- **`main`** — la versión comercial. Habla del problema del cliente. Es donde
+  se trabaja.
+- **`landing-cv`** (`f75e9c9`) — la versión currículum, **congelada**. Habla de
+  Osmar, arranca en inglés y sirve para postularse a puestos. No se toca; si
+  hiciera falta actualizarla, sale una rama nueva desde ahí.
+
+Nada de force push en ninguna de las dos. Ver [[las-dos-ramas]].
+
 ## El sitio
 
 Stack: React 19, Vite 6, Tailwind v4 (`@tailwindcss/vite`, sin `postcss.config`),
