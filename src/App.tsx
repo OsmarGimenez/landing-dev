@@ -1,8 +1,6 @@
 import { motion, useScroll, useTransform } from 'motion/react';
-import React, { useState, useEffect, useRef } from 'react';
-import { Player } from '@lottiefiles/react-lottie-player';
+import React, { useState, useEffect, useRef, lazy, Suspense } from 'react';
 import cvFile from './CV-Osmar-Gimenez.pdf';
-import technologyData from './assets/Technology.json';
 import { ICONS, SERVICES, WHY_ME, TECH_STACK, CONTACT_INFO, WHATSAPP_URL } from './constants';
 import { 
   SpotlightCard, 
@@ -14,12 +12,35 @@ import {
   RevealText
 } from './components/AnimatedComponents';
 
+// El player de Lottie y su animación pesan ~780 kB juntos y sólo se ven en desktop
+// (el contenedor es `hidden lg:flex`), así que se cargan bajo demanda.
+const Player = lazy(() =>
+  import('@lottiefiles/react-lottie-player').then(m => ({ default: m.Player }))
+);
+
+const useIsDesktop = () => {
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const query = window.matchMedia('(min-width: 1024px)');
+    const update = () => setIsDesktop(query.matches);
+
+    update();
+    query.addEventListener('change', update);
+
+    return () => query.removeEventListener('change', update);
+  }, []);
+
+  return isDesktop;
+};
+
 export default function App() {
 
   
 
   const [theme, setTheme] = useState<'light' | 'dark'>('dark');
   const [lang, setLang] = useState<'en' | 'es'>('es');
+  const isDesktop = useIsDesktop();
 
   useEffect(() => {
     if (theme === 'dark') {
@@ -331,13 +352,17 @@ export default function App() {
             {/* Right Column: The Animation */}
               <div className="hidden lg:flex justify-center items-center relative w-full h-[450px]">
                 <div className="relative mx-auto flex justify-center items-center w-full max-w-[400px] h-[400px]">
-                  <Player
-                    autoplay
-                    loop
-                    src={technologyData}
-                    style={{ height: '100%', width: '100%' }}
-                    className="relative"
-                  />
+                  {isDesktop && (
+                    <Suspense fallback={null}>
+                      <Player
+                        autoplay
+                        loop
+                        src={`${import.meta.env.BASE_URL}Technology.json`}
+                        style={{ height: '100%', width: '100%' }}
+                        className="relative"
+                      />
+                    </Suspense>
+                  )}
                 </div>
               </div>
           </div>
