@@ -123,7 +123,7 @@ export default function App() {
       whyMeSubtitle: "I don't just write code; I build the engine that drives your business forward.",
       whyMeList: [
         {
-          title: "5+ Years of Quality",
+          title: "8+ Years of Quality",
           description: "I have a proven track record of building robust, enterprise-grade software that stands the test of time."
         },
         {
@@ -146,7 +146,7 @@ export default function App() {
       stackToggle: "Technologies I work with",
       stackHint: "For anyone who wants the technical detail",
       contactTitle: "Ready to scale your digital presence?",
-      contactSubtitle: "Let's discuss how my 5+ years of software expertise can drive your business results.",
+      contactSubtitle: "Let's discuss how my 8+ years of software expertise can drive your business results.",
       contactPrimary: "Send an Email",
       contactSecondary: "LinkedIn Profile",
       badge1: "Paraguay (Remote Available)",
@@ -223,7 +223,7 @@ export default function App() {
       whyMeSubtitle: "No solo escribo código; construyo el motor que impulsa el crecimiento de tu negocio.",
       whyMeList: [
         {
-          title: "5+ Años de Calidad",
+          title: "+8 Años de Calidad",
           description: "Cuento con una trayectoria comprobada construyendo software empresarial robusto que resiste el paso del tiempo."
         },
         {
@@ -246,7 +246,7 @@ export default function App() {
       stackToggle: "Tecnologías con las que trabajo",
       stackHint: "Para quien quiera el detalle técnico",
       contactTitle: "¿Listo para escalar tu presencia digital?",
-      contactSubtitle: "Hablemos de cómo mis más de 5 años de experiencia en software pueden impulsar los resultados de tu negocio.",
+      contactSubtitle: "Hablemos de cómo mis más de 8 años de experiencia en software pueden impulsar los resultados de tu negocio.",
       contactPrimary: "Enviar un Correo",
       contactSecondary: "Perfil de LinkedIn",
       badge1: "Paraguay (Disponible en Remoto)",
