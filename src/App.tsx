@@ -1,7 +1,7 @@
 import { motion, useScroll, useTransform } from 'motion/react';
-import React, { useState, useEffect, useRef, lazy, Suspense } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import cvFile from './CV-Osmar-Gimenez.pdf';
-import { ICONS, SERVICES, PROCESS, WHY_ME, TECH_STACK, CONTACT_INFO, WHATSAPP_URL } from './constants';
+import { ICONS, SERVICES, PROCESS, WHY_ME, CONTACT_INFO, WHATSAPP_URL } from './constants';
 import {
   SpotlightCard,
   MagneticButton,
@@ -10,40 +10,42 @@ import {
   Noise,
   RevealText
 } from './components/AnimatedComponents';
-import { NandutiSun, NandutiWeave } from './components/Nanduti';
+import { NandutiSun, NandutiHero, NandutiWeave } from './components/Nanduti';
+import { BrandIcon } from './components/BrandIcon';
+import { TechMarquee } from './components/TechMarquee';
 
-// El motor de Lottie y su animación sólo se ven en desktop (el contenedor es
-// `hidden lg:flex`), así que se cargan bajo demanda.
-//
-// LottieLight es el build sin motor de expressions: es el más chico de los tres
-// y el único sin `eval`. Technology.json no usa expressions, así que rinde igual.
-const Lottie = lazy(() =>
-  import('lottie-react').then(m => ({ default: m.LottieLight }))
+/**
+ * Subraya una frase con un hilo tejido a mano, en lugar de pintarla con un
+ * degradado. El trazo es irregular a proposito: un subrayado perfectamente
+ * recto se lee como borde de caja, uno con pulso se lee como hecho por alguien.
+ */
+const ThreadUnderline = ({children}: {children: React.ReactNode}) => (
+  <span className="relative inline-block whitespace-normal text-brand-primary">
+    {children}
+    <svg
+      viewBox="0 0 300 12"
+      preserveAspectRatio="none"
+      aria-hidden="true"
+      className="absolute -bottom-1 left-0 h-[0.35em] w-full text-brand-secondary"
+    >
+      <path
+        d="M2 7.5 C 48 3, 96 9.5, 148 5.5 S 252 3.5, 298 6.5"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth={3}
+        strokeLinecap="round"
+        vectorEffect="non-scaling-stroke"
+      />
+    </svg>
+  </span>
 );
-
-const useIsDesktop = () => {
-  const [isDesktop, setIsDesktop] = useState(false);
-
-  useEffect(() => {
-    const query = window.matchMedia('(min-width: 1024px)');
-    const update = () => setIsDesktop(query.matches);
-
-    update();
-    query.addEventListener('change', update);
-
-    return () => query.removeEventListener('change', update);
-  }, []);
-
-  return isDesktop;
-};
 
 export default function App() {
 
-  
+
 
   const [theme, setTheme] = useState<'light' | 'dark'>('dark');
   const [lang, setLang] = useState<'en' | 'es'>('es');
-  const isDesktop = useIsDesktop();
 
   useEffect(() => {
     if (theme === 'dark') {
@@ -55,7 +57,7 @@ export default function App() {
 
   const t = {
     en: {
-      badge: "Osmar Gimenez | Software Dev",
+      badge: "Osmar Gimenez, software developer",
       heroLocation: "Based in Paraguay",
       headline: "I build digital solutions that drive business growth.",
       subtitle: "From high-performance landing pages to complex backend architectures, I handle the entire process so you can focus on your business.",
@@ -155,7 +157,7 @@ export default function App() {
       copyright: "© 2026 OSMAR.GIMENEZ. ALL RIGHTS RESERVED."
     },
     es: {
-      badge: "Osmar Giménez | Desarrollador de software",
+      badge: "Osmar Giménez, desarrollador de software",
       heroLocation: "Desde Paraguay",
       headline: "Construyo soluciones tecnológicas que impulsan tu crecimiento",
       subtitle: "Desde landing pages de alto rendimiento hasta arquitecturas backend complejas, gestiono todo el proceso para que puedas enfocarte en tu negocio",
@@ -286,7 +288,7 @@ export default function App() {
           aria-label="Escribir por WhatsApp"
           className="fixed bottom-6 right-6 z-[60] flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg shadow-black/30 transition-transform duration-300 hover:scale-110 active:scale-95"
         >
-          <ICONS.MessageCircle size={26} />
+          <BrandIcon slug="whatsapp" size={28} />
         </a>
       )}
       <Noise />
@@ -364,31 +366,37 @@ export default function App() {
               transition={{ duration: 0.8, ease: "easeOut" }}
               className="flex flex-col items-start text-left"
             >
+              {/* Una linea, no dos pildoras. El par de chips redondeados con
+                  punto que late y `uppercase tracking-widest` es la firma
+                  visual del landing generado; esto se lee como cabecera de
+                  publicacion, que es lo contrario. */}
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 0.2 }}
-                className="flex flex-wrap items-center gap-2 mb-6 sm:mb-8"
+                transition={{ delay: 0.15 }}
+                className="mb-8 flex items-center gap-3 text-sm text-brand-muted"
               >
-                <span className="inline-flex items-center gap-2 py-1.5 px-4 rounded-full bg-brand-primary/10 text-brand-primary text-[10px] sm:text-xs font-bold tracking-widest uppercase border border-brand-primary/20">
-                  <span className="w-2 h-2 rounded-full bg-brand-primary animate-pulse" />
-                  {content.badge}
-                </span>
-                {/* Ser de acá es la ventaja frente al perfil anónimo de
-                    marketplace, así que va arriba y no en el pie. */}
-                <span className="inline-flex items-center gap-2 py-1.5 px-4 rounded-full bg-brand-secondary/10 text-brand-secondary text-[10px] sm:text-xs font-bold tracking-widest uppercase border border-brand-secondary/20">
-                  <ICONS.MapPin size={13} />
+                <NandutiSun seed={1} className="h-5 w-5 shrink-0 text-brand-primary" />
+                <span>{content.badge}</span>
+                <span aria-hidden="true" className="hidden h-px w-6 bg-brand-border sm:block" />
+                <span className="hidden items-center gap-1.5 text-brand-secondary sm:inline-flex">
+                  <ICONS.MapPin size={14} />
                   {content.heroLocation}
                 </span>
               </motion.div>
-              <h1 className="text-3xl sm:text-4xl md:text-6xl font-display font-bold mb-6 sm:mb-8 leading-[1.2] md:leading-[1.1] tracking-tight text-left text-balance">
+              {/* Sin degradado en el texto: es otro tic del landing generado, y
+                  ademas baja el contraste justo en la linea mas importante. La
+                  frase clave se marca con un hilo tejido debajo. */}
+              <h1 className="mb-6 text-balance text-left font-display text-4xl font-extrabold leading-[1.08] tracking-[-0.03em] sm:mb-8 sm:text-5xl md:text-[4.25rem]">
                 {lang === 'es' ? (
                   <>
-                    Construyo soluciones tecnológicas que <span className="bg-clip-text text-transparent bg-gradient-to-r from-brand-primary to-brand-secondary">impulsan tu crecimiento.</span>
+                    Construyo soluciones tecnológicas que{' '}
+                    <ThreadUnderline>impulsan tu crecimiento.</ThreadUnderline>
                   </>
                 ) : (
                   <>
-                    I build digital solutions that <span className="bg-clip-text text-transparent bg-gradient-to-r from-brand-primary to-brand-secondary">drive business growth.</span>
+                    I build digital solutions that{' '}
+                    <ThreadUnderline>drive business growth.</ThreadUnderline>
                   </>
                 )}
               </h1>
@@ -408,9 +416,9 @@ export default function App() {
                       href={WHATSAPP_URL}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="btn-primary flex items-center justify-center gap-3 px-8 sm:px-10 py-4 sm:py-5 text-base sm:text-lg font-bold w-full sm:w-auto"
+                      className="btn-whatsapp flex w-full items-center justify-center gap-3 px-8 py-4 text-base font-bold sm:w-auto sm:px-10 sm:py-5 sm:text-lg"
                     >
-                      <ICONS.MessageCircle size={22} /> {content.ctaWhatsapp}
+                      <BrandIcon slug="whatsapp" size={24} /> {content.ctaWhatsapp}
                     </a>
                   ) : (
                     <a href="#contact" className="btn-primary flex items-center justify-center gap-3 px-8 sm:px-10 py-4 sm:py-5 text-base sm:text-lg font-bold w-full sm:w-auto">
@@ -426,22 +434,11 @@ export default function App() {
               </div>
             </motion.div>
 
-            {/* Right Column: The Animation */}
-              <div className="hidden lg:flex justify-center items-center relative w-full h-[450px]">
-                <div className="relative mx-auto flex justify-center items-center w-full max-w-[400px] h-[400px]">
-                  {isDesktop && (
-                    <Suspense fallback={null}>
-                      <Lottie
-                        autoplay
-                        loop
-                        src={`${import.meta.env.BASE_URL}Technology.json`}
-                        style={{ height: '100%', width: '100%' }}
-                        className="relative"
-                      />
-                    </Suspense>
-                  )}
-                </div>
-              </div>
+            {/* Ñandutí en lugar de la ilustración de stock. Es SVG generado en
+                el propio bundle, así que no hay chunk ni JSON que descargar. */}
+            <div className="hidden lg:flex justify-center items-center relative w-full h-[450px]">
+              <NandutiHero className="w-full max-w-[420px]" />
+            </div>
           </div>
         </div>
       </section>
@@ -655,65 +652,22 @@ export default function App() {
         </div>
       </motion.section>
 
-      {/* Stack. Veintiséis tecnologias no le dicen nada a quien compra una
-          landing, asi que van al final y cerradas: siguen ahi para el que las
-          busca, sin ocupar una pantalla de la ruta de conversion. */}
+      {/* Stack como carrusel: dos carriles que corren en sentidos opuestos.
+          Se ven las 26 tecnologias de un vistazo, con el glifo real de cada
+          marca, y ocupa un tercio de lo que ocupaba la grilla de tarjetas. */}
       <section
         id="stack"
-        className="py-16 bg-brand-card/20 border-y border-brand-border relative overflow-hidden"
+        className="relative overflow-hidden border-y border-brand-border bg-brand-card/20 py-16"
       >
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <details className="group/stack">
-            <summary className="flex cursor-pointer list-none items-center justify-between gap-4 rounded-xl border border-brand-border bg-brand-card/50 px-6 py-5 transition-colors hover:border-brand-primary/50">
-              <span className="flex items-center gap-4">
-                <ICONS.Terminal size={20} className="text-brand-primary" />
-                <span className="text-left">
-                  <span className="block font-display text-lg font-bold">
-                    {content.stackToggle}
-                    <span className="ml-2 text-brand-muted font-normal">
-                      ({TECH_STACK.reduce((n, c) => n + c.items.length, 0)})
-                    </span>
-                  </span>
-                  <span className="block text-sm text-brand-muted">{content.stackHint}</span>
-                </span>
-              </span>
-              <ICONS.ArrowRight
-                size={20}
-                className="shrink-0 text-brand-muted transition-transform duration-300 group-open/stack:rotate-90"
-              />
-            </summary>
+        <div className="relative z-10">
+          <div className="mx-auto mb-10 max-w-7xl px-6">
+            <h2 className="font-display text-2xl font-bold tracking-tight">
+              {content.stackToggle}
+            </h2>
+            <p className="mt-1 text-sm text-brand-muted">{content.stackHint}</p>
+          </div>
 
-            <div className="grid gap-8 pt-8 sm:grid-cols-2 lg:grid-cols-4">
-              {TECH_STACK.map((category) => {
-                const CategoryIcon = ICONS[category.icon as keyof typeof ICONS];
-                return (
-                  <SpotlightCard key={category.category} className="p-8 h-full border-brand-border hover:border-brand-primary/50 transition-colors">
-                    <div className="flex items-center gap-4 mb-8">
-                      <div className="p-3 rounded-xl bg-brand-primary/10 text-brand-primary">
-                        <CategoryIcon size={24} />
-                      </div>
-                      <h4 className="text-xl font-bold font-display">{category.category}</h4>
-                    </div>
-                    <div className="flex flex-wrap gap-3">
-                      {category.items.map(item => {
-                        const ItemIcon = ICONS[item.icon as keyof typeof ICONS];
-                        return (
-                          <div
-                            key={item.name}
-                            className="tech-chip flex items-center gap-2 px-3 py-2 bg-brand-card border border-brand-border rounded-xl text-sm text-brand-muted hover:text-brand-text transition-all duration-300 group/tech"
-                            style={{ '--hover-color': item.color } as React.CSSProperties}
-                          >
-                            <ItemIcon size={16} className="text-brand-muted group-hover/tech:text-[var(--hover-color)] transition-colors" />
-                            <span className="font-medium">{item.name}</span>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </SpotlightCard>
-                );
-              })}
-            </div>
-          </details>
+          <TechMarquee />
         </div>
       </section>
 
@@ -740,8 +694,8 @@ export default function App() {
           <div className="flex flex-col md:flex-row justify-center gap-8 mb-16">
             {WHATSAPP_URL && (
               <MagneticButton>
-                <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="btn-primary flex items-center justify-center gap-4 px-12 py-6 text-xl font-bold shadow-2xl shadow-brand-primary/20 whitespace-nowrap">
-                  <ICONS.MessageCircle size={26} /> WhatsApp
+                <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="btn-whatsapp flex items-center justify-center gap-4 whitespace-nowrap px-12 py-6 text-xl font-bold">
+                  <BrandIcon slug="whatsapp" size={28} /> WhatsApp
                 </a>
               </MagneticButton>
             )}

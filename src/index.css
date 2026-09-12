@@ -2,8 +2,12 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
+  /* Poppins es la tipografia por defecto de medio landing generado; se cambia
+     por Bricolage Grotesque, que es variable, tiene ancho optico y se lee como
+     elegida a proposito. Inter se queda para texto corrido: es un caballo de
+     batalla y cambiar las dos a la vez arriesga la legibilidad. */
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Poppins", sans-serif;
+  --font-display: "Bricolage Grotesque", "Inter", sans-serif;
 
   --color-brand-bg: var(--bg);
   --color-brand-primary: #3B82F6;
@@ -184,4 +188,105 @@
     radial-gradient(at 100% 0%, rgba(20, 184, 166, 0.1) 0px, transparent 50%),
     radial-gradient(at 100% 100%, rgba(37, 99, 235, 0.1) 0px, transparent 50%),
     radial-gradient(at 0% 100%, rgba(20, 184, 166, 0.1) 0px, transparent 50%);
+}
+/* --- Carrusel de tecnologias --------------------------------------------
+   El carril lleva la lista duplicada y se desplaza exactamente un 50%: al
+   completar el ciclo, la copia queda donde arranco el original y el reinicio
+   es invisible. */
+
+@keyframes marquee-scroll {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.marquee-track {
+  animation: marquee-scroll var(--marquee-seconds, 40s) linear infinite;
+  will-change: transform;
+}
+
+.marquee-track--reverse {
+  animation-direction: reverse;
+}
+
+/* Pausa al pasar por encima, para poder leer un nombre concreto. */
+.marquee-viewport:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+/* Desvanecido en los bordes, para que los chips entren y salgan en vez de
+   cortarse de golpe contra el borde de la seccion. */
+.marquee-mask {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 6rem,
+    #000 calc(100% - 6rem),
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 6rem,
+    #000 calc(100% - 6rem),
+    transparent
+  );
+}
+
+/* Con movimiento reducido el carril se detiene y la lista se deja ver
+   entera, envuelta en varias lineas. */
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .marquee-mask {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+}
+
+/* Giro del ñandutí del hero. Muy lento a proposito: tiene que leerse como un
+   tejido que respira, no como un spinner de carga. La duracion la fija cada
+   sol por estilo inline. */
+@keyframes nanduti-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.nanduti-spin {
+  animation: nanduti-spin 120s linear infinite;
+  transform-origin: 50% 50%;
+}
+
+.nanduti-spin--reverse {
+  animation-direction: reverse;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nanduti-spin {
+    animation: none;
+  }
+}
+
+/* Boton de WhatsApp con la identidad de la app: su verde oficial (#25D366) y
+   el verde oscuro de marca al pasar por encima. Antes usaba el azul primario
+   con un bocadillo generico, que no lo hacia reconocible de un vistazo. */
+.btn-whatsapp {
+  @apply rounded-lg font-semibold text-white transition-all duration-300 active:scale-95;
+  background-color: #25d366;
+  box-shadow: 0 10px 30px -10px rgba(37, 211, 102, 0.55);
+}
+
+.btn-whatsapp:hover {
+  background-color: #1da851;
 }

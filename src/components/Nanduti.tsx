@@ -10,6 +10,8 @@
  * funciona igual en claro y en oscuro sin definir colores propios.
  */
 
+import type { CSSProperties } from 'react';
+
 const TAU = Math.PI * 2;
 
 /** Punto sobre una circunferencia, con el cero arriba en vez de a la derecha. */
@@ -29,6 +31,7 @@ type SunProps = {
   /** Elige la familia de tejido y el desfase; normalmente el indice del item. */
   seed?: number;
   className?: string;
+  style?: CSSProperties;
 };
 
 /**
@@ -37,7 +40,7 @@ type SunProps = {
  * El viewBox es cuadrado y el trazo no escala, así el encaje mantiene su grosor
  * cuando la tarjeta lo estira.
  */
-export const NandutiSun = ({seed = 0, className = ''}: SunProps) => {
+export const NandutiSun = ({seed = 0, className = '', style}: SunProps) => {
   const size = 200;
   const c = size / 2;
   const outer = c - 4;
@@ -86,6 +89,7 @@ export const NandutiSun = ({seed = 0, className = ''}: SunProps) => {
     <svg
       viewBox={`0 0 ${size} ${size}`}
       className={className}
+      style={style}
       fill="none"
       stroke="currentColor"
       vectorEffect="non-scaling-stroke"
@@ -114,6 +118,35 @@ export const NandutiSun = ({seed = 0, className = ''}: SunProps) => {
     </svg>
   );
 };
+
+/**
+ * Composición del hero: tres soles concéntricos girando a distinta velocidad y
+ * en sentidos alternos, como los paños de ñandutí que se cosen unos sobre
+ * otros.
+ *
+ * Reemplaza a la ilustración plana de "desarrollador con plantitas", que era
+ * el elemento que más delataba plantilla generada. De paso permitió sacar el
+ * motor de animación y su JSON, que juntos pesaban 780 kB.
+ */
+export const NandutiHero = ({className = ''}: {className?: string}) => (
+  <div className={`relative aspect-square ${className}`}>
+    <NandutiSun
+      seed={2}
+      className="nanduti-spin absolute inset-0 h-full w-full text-brand-primary opacity-70"
+      style={{animationDuration: '140s'}}
+    />
+    <NandutiSun
+      seed={1}
+      className="nanduti-spin nanduti-spin--reverse absolute inset-[14%] h-[72%] w-[72%] text-brand-secondary opacity-60"
+      style={{animationDuration: '95s'}}
+    />
+    <NandutiSun
+      seed={0}
+      className="nanduti-spin absolute inset-[30%] h-[40%] w-[40%] text-brand-primary opacity-90"
+      style={{animationDuration: '60s'}}
+    />
+  </div>
+);
 
 /**
  * Trama de fondo: soles chicos repetidos, al modo del ñandutí cosido en paños.

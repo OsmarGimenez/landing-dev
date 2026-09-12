@@ -116,55 +116,63 @@ export const WHY_ME = [
   }
 ];
 
+// `slug` apunta al glifo de marca en components/techIcons. Los que no tienen
+// (Oracle, SQL Server y CI/CD no estan en simple-icons por marca registrada)
+// caen al icono generico de `icon`.
+//
+// Los colores son los de cada marca, salvo cuatro que venian practicamente
+// negros y desaparecian sobre el fondo oscuro: Django, SQLite y Flutter usan
+// su tono claro oficial, y Next.js —cuya marca es monocroma— un gris neutro
+// que se lee en ambos temas.
 export const TECH_STACK = [
   {
     category: "Backend",
     icon: "Server",
     items: [
-      { name: "PHP", icon: "Code2", color: "#777BB4" },
-      { name: "Laravel", icon: "Zap", color: "#FF2D20" },
-      { name: "Python", icon: "Terminal", color: "#3776AB" },
-      { name: "Django", icon: "ShieldCheck", color: "#092E20" },
-      { name: "FastAPI", icon: "Zap", color: "#05998B" },
-      { name: "C#", icon: "Code2", color: "#239120" },
-      { name: "Java", icon: "Coffee", color: "#007396" },
-      { name: "Spring Boot", icon: "Leaf", color: "#6DB33F" },
-      { name: "Node.js", icon: "Server", color: "#339933" }
+      { name: "PHP", slug: "php", icon: "Code2", color: "#777BB4" },
+      { name: "Laravel", slug: "laravel", icon: "Zap", color: "#FF2D20" },
+      { name: "Python", slug: "python", icon: "Terminal", color: "#3776AB" },
+      { name: "Django", slug: "django", icon: "ShieldCheck", color: "#44B78B" },
+      { name: "FastAPI", slug: "fastapi", icon: "Zap", color: "#05998B" },
+      { name: "C#", slug: "dotnet", icon: "Code2", color: "#512BD4" },
+      { name: "Java", slug: "openjdk", icon: "Coffee", color: "#F89820" },
+      { name: "Spring Boot", slug: "springboot", icon: "Leaf", color: "#6DB33F" },
+      { name: "Node.js", slug: "nodedotjs", icon: "Server", color: "#339933" }
     ]
   },
   {
     category: "Frontend",
     icon: "Layout",
     items: [
-      { name: "TypeScript", icon: "Code2", color: "#3178C6" },
-      { name: "JavaScript", icon: "Code2", color: "#F7DF1E" },
-      { name: "React", icon: "Cpu", color: "#61DAFB" },
-      { name: "Next.js", icon: "Globe", color: "#000000" },
-      { name: "Flutter", icon: "Layers", color: "#02569B" },
-      { name: "Tailwind CSS", icon: "Palette", color: "#06B6D4" }
+      { name: "TypeScript", slug: "typescript", icon: "Code2", color: "#3178C6" },
+      { name: "JavaScript", slug: "javascript", icon: "Code2", color: "#F7DF1E" },
+      { name: "React", slug: "react", icon: "Cpu", color: "#61DAFB" },
+      { name: "Next.js", slug: "nextdotjs", icon: "Globe", color: "#9CA3AF" },
+      { name: "Flutter", slug: "flutter", icon: "Layers", color: "#54C5F8" },
+      { name: "Tailwind CSS", slug: "tailwindcss", icon: "Palette", color: "#06B6D4" }
     ]
   },
   {
     category: "Databases",
     icon: "Database",
     items: [
-      { name: "PostgreSQL", icon: "Database", color: "#4169E1" },
-      { name: "Oracle", icon: "Database", color: "#F80000" },
-      { name: "SQL Server", icon: "Database", color: "#CC2927" },
-      { name: "MySQL", icon: "Database", color: "#4479A1" },
-      { name: "SQLite", icon: "Database", color: "#003B57" },
-      { name: "Redis", icon: "Zap", color: "#DC382D" }
+      { name: "PostgreSQL", slug: "postgresql", icon: "Database", color: "#4169E1" },
+      { name: "Oracle", slug: null, icon: "Database", color: "#F80000" },
+      { name: "SQL Server", slug: null, icon: "Database", color: "#CC2927" },
+      { name: "MySQL", slug: "mysql", icon: "Database", color: "#4479A1" },
+      { name: "SQLite", slug: "sqlite", icon: "Database", color: "#0F80CC" },
+      { name: "Redis", slug: "redis", icon: "Zap", color: "#DC382D" }
     ]
   },
   {
     category: "DevOps & Tools",
     icon: "Terminal",
     items: [
-      { name: "Docker", icon: "Box", color: "#2496ED" },
-      { name: "Linux", icon: "Terminal", color: "#FCC624" },
-      { name: "Git", icon: "GitBranch", color: "#F05032" },
-      { name: "GitHub Actions", icon: "Activity", color: "#2088FF" },
-      { name: "CI/CD", icon: "RefreshCw", color: "#000000" }
+      { name: "Docker", slug: "docker", icon: "Box", color: "#2496ED" },
+      { name: "Linux", slug: "linux", icon: "Terminal", color: "#FCC624" },
+      { name: "Git", slug: "git", icon: "GitBranch", color: "#F05032" },
+      { name: "GitHub Actions", slug: "githubactions", icon: "Activity", color: "#2088FF" },
+      { name: "CI/CD", slug: null, icon: "RefreshCw", color: "#9CA3AF" }
     ]
   }
 ];
