@@ -9,6 +9,7 @@ import {
   Github, 
   Linkedin, 
   Mail, 
+  MessageCircle,
   MapPin, 
   ExternalLink, 
   CheckCircle2,
@@ -46,6 +47,7 @@ export const ICONS = {
   Github,
   Linkedin,
   Mail,
+  MessageCircle,
   MapPin,
   ExternalLink,
   CheckCircle2,
@@ -120,6 +122,14 @@ export const SERVICES = [
     tags: ["Docker", "GitHub Actions", "Linux", "CI/CD"],
     mockup: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80",
     color: "sky"
+  },
+  {
+    title: "Odoo ERP",
+    description: "Odoo implementation and integrations for growing businesses.",
+    icon: "Box",
+    tags: ["Odoo", "Python", "PostgreSQL", "n8n"],
+    mockup: "https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&fit=crop&w=800&q=80",
+    color: "violet"
   }
 ];
 
@@ -195,9 +205,21 @@ export const TECH_STACK = [
   }
 ];
 
+// TODO: completar con tu numero en formato internacional sin signos, ej: "595981123456".
+// Mientras este vacio, el boton de WhatsApp no se renderiza.
+export const WHATSAPP_NUMBER = "";
+
+export const WHATSAPP_MESSAGE =
+  "Hola Osmar, vi tu sitio y quiero consultarte por un proyecto.";
+
+export const WHATSAPP_URL = WHATSAPP_NUMBER
+  ? `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`
+  : "";
+
 export const CONTACT_INFO = {
   name: "Osmar Gimenez",
   email: "osmar_gimenez@outlook.com",
   linkedin: "https://www.linkedin.com/in/osmar-gimenez-5971b0187/",
-  location: "Paraguay (Remote Available)"
+  location: "Paraguay (Remote Available)",
+  whatsapp: WHATSAPP_URL
 };

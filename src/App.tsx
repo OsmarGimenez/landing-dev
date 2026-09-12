@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Player } from '@lottiefiles/react-lottie-player';
 import cvFile from './CV-Osmar-Gimenez.pdf';
 import technologyData from './assets/Technology.json';
-import { ICONS, SERVICES, WHY_ME, TECH_STACK, CONTACT_INFO } from './constants';
+import { ICONS, SERVICES, WHY_ME, TECH_STACK, CONTACT_INFO, WHATSAPP_URL } from './constants';
 import { 
   SpotlightCard, 
   MagneticButton, 
@@ -19,7 +19,7 @@ export default function App() {
   
 
   const [theme, setTheme] = useState<'light' | 'dark'>('dark');
-  const [lang, setLang] = useState<'en' | 'es'>('en');
+  const [lang, setLang] = useState<'en' | 'es'>('es');
 
   useEffect(() => {
     if (theme === 'dark') {
@@ -64,6 +64,10 @@ export default function App() {
         {
           title: "Automations & CI/CD",
           description: "Automation & Deployment. I optimize your workflow with automatic processes and continuous deployments without errors."
+        },
+        {
+          title: "Odoo ERP",
+          description: "Outgrown your spreadsheets? We implement Odoo so stock, sales and invoicing live in one place. Migration, setup and support."
         }
       ],
       whyMeTitle: "Why choose my work?",
@@ -134,6 +138,10 @@ export default function App() {
         {
           title: "Automatización y CI/CD",
           description: "Automatización y Despliegue. Optimizo tu flujo de trabajo con procesos automáticos y despliegues continuos sin errores."
+        },
+        {
+          title: "Odoo ERP",
+          description: "¿Tu negocio ya no entra en las planillas? Implementamos Odoo para que stock, ventas y facturación estén en un solo lugar. Migración, configuración y soporte."
         }
       ],
       whyMeTitle: "¿Por qué elegir mi trabajo?",
@@ -194,6 +202,17 @@ export default function App() {
 
   return (
     <div className="min-h-screen selection:bg-brand-primary/30 overflow-x-hidden bg-brand-bg font-sans text-brand-text transition-colors duration-500">
+      {WHATSAPP_URL && (
+        <a
+          href={WHATSAPP_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Escribir por WhatsApp"
+          className="fixed bottom-6 right-6 z-[60] flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg shadow-black/30 transition-transform duration-300 hover:scale-110 active:scale-95"
+        >
+          <ICONS.MessageCircle size={26} />
+        </a>
+      )}
       <Noise />
       <GridBackground />
       <MouseFollower theme={theme} />
@@ -357,6 +376,7 @@ export default function App() {
                 amber: 'hover:border-amber-500/30 hover:shadow-[0_0_20px_-5px_rgba(253,230,138,0.1)] dark:hover:shadow-[0_0_35px_-5px_rgba(245,158,11,0.4)] [--glow-color:rgba(253,230,138,0.1)] dark:[--glow-color:rgba(245,158,11,0.4)] [--border-glow-color:rgba(253,230,138,0.3)] dark:[--border-glow-color:rgba(245,158,11,0.6)] [--glow-blend:soft-light] dark:[--glow-blend:normal]',
                 emerald: 'hover:border-emerald-500/30 hover:shadow-[0_0_20px_-5px_rgba(167,243,208,0.1)] dark:hover:shadow-[0_0_35px_-5px_rgba(16,185,129,0.4)] [--glow-color:rgba(167,243,208,0.1)] dark:[--glow-color:rgba(16,185,129,0.4)] [--border-glow-color:rgba(167,243,208,0.3)] dark:[--border-glow-color:rgba(16,185,129,0.6)] [--glow-blend:soft-light] dark:[--glow-blend:normal]',
                 sky: 'hover:border-sky-500/30 hover:shadow-[0_0_20px_-5px_rgba(186,230,253,0.1)] dark:hover:shadow-[0_0_35px_-5px_rgba(14,165,233,0.4)] [--glow-color:rgba(186,230,253,0.1)] dark:[--glow-color:rgba(14,165,233,0.4)] [--border-glow-color:rgba(186,230,253,0.3)] dark:[--border-glow-color:rgba(14,165,233,0.6)] [--glow-blend:soft-light] dark:[--glow-blend:normal]',
+                violet: 'hover:border-violet-500/30 hover:shadow-[0_0_20px_-5px_rgba(221,214,254,0.1)] dark:hover:shadow-[0_0_35px_-5px_rgba(139,92,246,0.4)] [--glow-color:rgba(221,214,254,0.1)] dark:[--glow-color:rgba(139,92,246,0.4)] [--border-glow-color:rgba(221,214,254,0.3)] dark:[--border-glow-color:rgba(139,92,246,0.6)] [--glow-blend:soft-light] dark:[--glow-blend:normal]',
               };
 
               return (
@@ -544,17 +564,11 @@ export default function App() {
                       return (
                         <div 
                           key={item.name} 
-                          className="flex items-center gap-2 px-3 py-2 bg-brand-card border border-brand-border rounded-xl text-sm text-brand-muted hover:text-brand-text transition-all duration-300 group/tech"
+                          className="tech-chip flex items-center gap-2 px-3 py-2 bg-brand-card border border-brand-border rounded-xl text-sm text-brand-muted hover:text-brand-text transition-all duration-300 group/tech"
                           style={{ '--hover-color': item.color } as React.CSSProperties}
                         >
                           <ItemIcon size={16} className="text-brand-muted group-hover/tech:text-[var(--hover-color)] transition-colors" />
                           <span className="font-medium">{item.name}</span>
-                          <style dangerouslySetInnerHTML={{ __html: `
-                            .group\\/tech:hover {
-                              border-color: ${item.color}80 !important;
-                              box-shadow: 0 0 15px -5px ${item.color}40;
-                            }
-                          `}} />
                         </div>
                       );
                     })}
@@ -587,8 +601,15 @@ export default function App() {
           />
           
           <div className="flex flex-col md:flex-row justify-center gap-8 mb-16">
+            {WHATSAPP_URL && (
+              <MagneticButton>
+                <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="btn-primary flex items-center justify-center gap-4 px-12 py-6 text-xl font-bold shadow-2xl shadow-brand-primary/20 whitespace-nowrap">
+                  <ICONS.MessageCircle size={26} /> WhatsApp
+                </a>
+              </MagneticButton>
+            )}
             <MagneticButton>
-              <a href={`mailto:${CONTACT_INFO.email}`} className="btn-primary flex items-center justify-center gap-4 px-12 py-6 text-xl font-bold shadow-2xl shadow-brand-primary/20 whitespace-nowrap">
+              <a href={`mailto:${CONTACT_INFO.email}`} className="btn-secondary flex items-center justify-center gap-4 px-12 py-6 text-xl font-bold whitespace-nowrap">
                 <ICONS.Mail size={26} /> {content.contactPrimary}
               </a>
             </MagneticButton>

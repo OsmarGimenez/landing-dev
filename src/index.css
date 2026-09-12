@@ -151,6 +151,15 @@
   animation: shine 5s infinite;
 }
 
+/* Chip de tecnologia: el color de hover viene de la variable --hover-color
+   que se setea inline por item. Antes esto se inyectaba con un <style> por
+   item dentro del map, lo que generaba ~26 bloques duplicados con el mismo
+   selector y hacia que solo el ultimo tuviera efecto. */
+.tech-chip:hover {
+  border-color: color-mix(in srgb, var(--hover-color) 50%, transparent) !important;
+  box-shadow: 0 0 15px -5px var(--hover-color);
+}
+
 .animation-delay-2000 {
   animation-delay: 2s;
 }
