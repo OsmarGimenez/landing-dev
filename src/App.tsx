@@ -12,10 +12,13 @@ import {
   RevealText
 } from './components/AnimatedComponents';
 
-// El player de Lottie y su animación pesan ~780 kB juntos y sólo se ven en desktop
-// (el contenedor es `hidden lg:flex`), así que se cargan bajo demanda.
-const Player = lazy(() =>
-  import('@lottiefiles/react-lottie-player').then(m => ({ default: m.Player }))
+// El motor de Lottie y su animación sólo se ven en desktop (el contenedor es
+// `hidden lg:flex`), así que se cargan bajo demanda.
+//
+// LottieLight es el build sin motor de expressions: es el más chico de los tres
+// y el único sin `eval`. Technology.json no usa expressions, así que rinde igual.
+const Lottie = lazy(() =>
+  import('lottie-react').then(m => ({ default: m.LottieLight }))
 );
 
 const useIsDesktop = () => {
@@ -354,7 +357,7 @@ export default function App() {
                 <div className="relative mx-auto flex justify-center items-center w-full max-w-[400px] h-[400px]">
                   {isDesktop && (
                     <Suspense fallback={null}>
-                      <Player
+                      <Lottie
                         autoplay
                         loop
                         src={`${import.meta.env.BASE_URL}Technology.json`}
