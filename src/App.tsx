@@ -450,10 +450,10 @@ export default function App() {
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
         variants={sectionVariants}
-        className="section-padding relative overflow-hidden bg-brand-card/30 border-y border-brand-border"
+        className="section-tint relative overflow-hidden py-20"
       >
         <div className="absolute inset-0 bg-dot-pattern opacity-10 pointer-events-none" />
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
+        <div className="relative z-10 mx-auto w-full max-w-7xl px-6 md:px-12 lg:px-24">
           <div className="mb-20">
             <h2 className="text-4xl md:text-6xl font-display font-bold mb-6">{content.servicesTitle}</h2>
             <RevealText 
@@ -527,9 +527,9 @@ export default function App() {
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
         variants={sectionVariants}
-        className="section-padding relative overflow-hidden"
+        className="relative overflow-hidden py-20"
       >
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
+        <div className="relative z-10 mx-auto w-full max-w-7xl px-6 md:px-12 lg:px-24">
           <div className="mb-20">
             <h2 className="text-4xl md:text-6xl font-display font-bold mb-6 text-balance">{content.processTitle}</h2>
             <RevealText
@@ -576,9 +576,9 @@ export default function App() {
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
         variants={sectionVariants}
-        className="section-padding"
+        className="py-20"
       >
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="mx-auto w-full max-w-7xl px-6 md:px-12 lg:px-24">
           <div className="mb-20">
             <h2 className="text-4xl md:text-6xl font-display font-bold mb-8 text-balance">{content.whyMeTitle}</h2>
             <RevealText 
@@ -625,13 +625,13 @@ export default function App() {
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
         variants={sectionVariants}
-        className="section-padding bg-brand-card/20 border-y border-brand-border relative overflow-hidden"
+        className="section-tint relative overflow-hidden py-20"
       >
         <NandutiSun
           seed={1}
           className="pointer-events-none absolute -right-16 -top-16 h-72 w-72 text-brand-primary opacity-[0.12]"
         />
-        <div className="max-w-3xl mx-auto px-6 relative z-10">
+        <div className="relative z-10 mx-auto w-full max-w-3xl px-6 md:px-12 lg:px-24">
           <h2 className="text-4xl md:text-5xl font-display font-bold mb-8 text-balance">{content.aboutTitle}</h2>
           <p className="text-xl text-brand-muted leading-relaxed mb-8 text-balance">
             {content.aboutText}
@@ -657,10 +657,12 @@ export default function App() {
           marca, y ocupa un tercio de lo que ocupaba la grilla de tarjetas. */}
       <section
         id="stack"
-        className="relative overflow-hidden border-y border-brand-border bg-brand-card/20 py-16"
+        className="section-tint relative overflow-hidden py-20"
       >
-        <div className="relative z-10">
-          <div className="mx-auto mb-10 max-w-7xl px-6">
+        {/* El carrusel vive dentro del mismo contenedor que el resto: a borde
+            completo hacia que las demas secciones se vieran angostas. */}
+        <div className="relative z-10 mx-auto w-full max-w-7xl px-6 md:px-12 lg:px-24">
+          <div className="mb-10">
             <h2 className="font-display text-2xl font-bold tracking-tight">
               {content.stackToggle}
             </h2>
@@ -678,10 +680,10 @@ export default function App() {
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
         variants={sectionVariants}
-        className="section-padding text-center relative overflow-hidden"
+        className="relative overflow-hidden py-20 text-center"
       >
         <div className="absolute inset-0 bg-mesh-gradient opacity-20 pointer-events-none" />
-        <div className="max-w-4xl mx-auto relative z-10">
+        <div className="relative z-10 mx-auto w-full max-w-4xl px-6 md:px-12 lg:px-24">
           <h2 className="text-5xl md:text-7xl mb-10 font-display font-bold leading-tight tracking-tight text-balance">
             {content.contactTitle}
           </h2>
@@ -695,7 +697,7 @@ export default function App() {
             {WHATSAPP_URL && (
               <MagneticButton>
                 <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="btn-whatsapp flex items-center justify-center gap-4 whitespace-nowrap px-12 py-6 text-xl font-bold">
-                  <BrandIcon slug="whatsapp" size={28} /> WhatsApp
+                  <BrandIcon slug="whatsapp" size={26} /> WhatsApp
                 </a>
               </MagneticButton>
             )}
@@ -711,7 +713,7 @@ export default function App() {
             </MagneticButton>
           </div>
 
-          <div className="flex flex-wrap justify-center gap-8 pt-12 border-t border-brand-border">
+          <div className="flex flex-wrap justify-center gap-8 pt-12">
             <div className="flex items-center gap-3 px-5 py-2.5 bg-brand-card border border-brand-border rounded-full text-sm font-medium text-brand-muted text-balance">
               <ICONS.MapPin size={18} className="text-brand-primary" /> {content.badge1}
             </div>
@@ -723,7 +725,7 @@ export default function App() {
       </motion.section>
 
       {/* Footer */}
-      <footer className="relative z-10 py-20 border-t border-brand-border bg-white dark:bg-black/40">
+      <footer className="relative z-10 py-20">
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-12 text-center md:text-left">
           <div className="flex flex-col items-center md:items-start">
             <span className="text-2xl font-display font-bold tracking-tighter text-brand-primary mb-4">

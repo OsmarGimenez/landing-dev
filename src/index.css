@@ -60,17 +60,28 @@
   @apply bg-brand-card backdrop-blur-md border border-brand-border rounded-2xl;
 }
 
-.btn-primary {
-  @apply px-6 py-3 bg-brand-primary hover:bg-blue-700 text-white font-semibold rounded-lg transition-all duration-300 shadow-lg shadow-brand-primary/20 active:scale-95;
+/* Los botones viven en @layer components para que las utilidades escritas en
+   el marcado (px-10, py-5, border-brand-border...) puedan pisarlos.
+   Sueltas fuera de toda capa, estas reglas le ganan a @layer utilities y el
+   padding del JSX se ignoraba en silencio: el hero pedia py-5 y recibia py-3.
+
+   El borde transparente en los rellenos iguala su caja con la del secundario,
+   que si lleva borde. Sin eso, un boton relleno queda 4px mas bajo que uno
+   delineado con el mismo padding. */
+@layer components {
+  .btn-primary {
+    @apply px-6 py-3 border-2 border-transparent bg-brand-primary hover:bg-blue-700 text-white font-semibold rounded-lg transition-all duration-300 shadow-lg shadow-brand-primary/20 active:scale-95;
+  }
+
+  .btn-secondary {
+    @apply px-6 py-3 border-2 border-brand-secondary text-brand-secondary hover:bg-brand-secondary hover:text-brand-bg font-semibold rounded-lg transition-all duration-300 active:scale-95;
+  }
 }
 
-.btn-secondary {
-  @apply px-6 py-3 border-2 border-brand-secondary text-brand-secondary hover:bg-brand-secondary hover:text-brand-bg font-semibold rounded-lg transition-all duration-300 active:scale-95;
-}
-
-.section-padding {
-  @apply py-20 px-6 md:px-12 lg:px-24 max-w-7xl mx-auto;
-}
+/* Nota: antes existia .section-padding, que junto con el espaciado aplicaba
+   `max-w-7xl mx-auto` al propio <section>. Eso limitaba tambien su fondo, asi
+   que las bandas tintadas quedaban mas angostas que la pantalla. Ahora la
+   seccion va a ancho completo y el contenedor de adentro fija el ancho. */
 
 .spotlight-card {
   @apply relative overflow-hidden bg-brand-card border border-brand-border rounded-2xl transition-all duration-500 hover:border-brand-primary/30;
@@ -218,20 +229,23 @@
 }
 
 /* Desvanecido en los bordes, para que los chips entren y salgan en vez de
-   cortarse de golpe contra el borde de la seccion. */
+   cortarse de golpe contra el borde del contenedor.
+
+   Va en porcentaje y no en rem: con un valor fijo, en un celular de 375px el
+   desvanecido se comia casi todo el ancho util. */
 .marquee-mask {
   -webkit-mask-image: linear-gradient(
     to right,
     transparent,
-    #000 6rem,
-    #000 calc(100% - 6rem),
+    #000 7%,
+    #000 93%,
     transparent
   );
   mask-image: linear-gradient(
     to right,
     transparent,
-    #000 6rem,
-    #000 calc(100% - 6rem),
+    #000 7%,
+    #000 93%,
     transparent
   );
 }
@@ -281,12 +295,29 @@
 /* Boton de WhatsApp con la identidad de la app: su verde oficial (#25D366) y
    el verde oscuro de marca al pasar por encima. Antes usaba el azul primario
    con un bocadillo generico, que no lo hacia reconocible de un vistazo. */
-.btn-whatsapp {
-  @apply rounded-lg font-semibold text-white transition-all duration-300 active:scale-95;
-  background-color: #25d366;
-  box-shadow: 0 10px 30px -10px rgba(37, 211, 102, 0.55);
+@layer components {
+  .btn-whatsapp {
+    @apply px-6 py-3 border-2 border-transparent rounded-lg font-semibold text-white transition-all duration-300 active:scale-95;
+    background-color: #25d366;
+    box-shadow: 0 10px 30px -10px rgba(37, 211, 102, 0.55);
+  }
+
+  .btn-whatsapp:hover {
+    background-color: #1da851;
+  }
 }
 
-.btn-whatsapp:hover {
-  background-color: #1da851;
+/* --- Transiciones entre secciones ---------------------------------------
+   Antes cada seccion alterna se marcaba con `border-y` mas un fondo solido,
+   lo que dejaba dos lineas duras por seccion y cortaba la pagina en bloques.
+   Aca el tinte se aplica como degradado que nace y muere en transparente:
+   se percibe el cambio de zona, pero no hay ningun borde que mirar. */
+.section-tint {
+  background-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    var(--card-bg) 18%,
+    var(--card-bg) 82%,
+    transparent 100%
+  );
 }
