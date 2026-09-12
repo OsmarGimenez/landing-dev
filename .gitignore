@@ -6,3 +6,6 @@ coverage/
 *.log
 .env*
 !.env.example
+
+# Obsidian (config local del editor; las notas SI se versionan)
+.obsidian/
