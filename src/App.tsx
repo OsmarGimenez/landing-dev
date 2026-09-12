@@ -1,16 +1,16 @@
 import { motion, useScroll, useTransform } from 'motion/react';
 import React, { useState, useEffect, useRef, lazy, Suspense } from 'react';
 import cvFile from './CV-Osmar-Gimenez.pdf';
-import { ICONS, SERVICES, WHY_ME, TECH_STACK, CONTACT_INFO, WHATSAPP_URL } from './constants';
-import { 
-  SpotlightCard, 
-  MagneticButton, 
+import { ICONS, SERVICES, PROCESS, WHY_ME, TECH_STACK, CONTACT_INFO, WHATSAPP_URL } from './constants';
+import {
+  SpotlightCard,
+  MagneticButton,
   MouseFollower,
-  GridBackground,
   FloatingShapes,
   Noise,
   RevealText
 } from './components/AnimatedComponents';
+import { NandutiSun, NandutiWeave } from './components/Nanduti';
 
 // El motor de Lottie y su animación sólo se ven en desktop (el contenedor es
 // `hidden lg:flex`), así que se cargan bajo demanda.
@@ -56,42 +56,67 @@ export default function App() {
   const t = {
     en: {
       badge: "Osmar Gimenez | Software Dev",
+      heroLocation: "Based in Paraguay",
       headline: "I build digital solutions that drive business growth.",
       subtitle: "From high-performance landing pages to complex backend architectures, I handle the entire process so you can focus on your business.",
       cta: "Start a Project",
+      ctaWhatsapp: "Message me on WhatsApp",
       services: "View Services",
-      nav: ['Services', 'Why Me', 'Stack', 'Contact'],
+      nav: ['Services', 'How I work', 'About me', 'Contact'],
       workTogether: "Let's Work Together",
-      servicesTitle: "Services",
-      servicesSubtitle: "Tailored technical solutions designed to solve complex business challenges.",
+      servicesTitle: "What I can build for you",
+      servicesSubtitle: "Start from what you need solved. The technology comes after.",
       servicesList: [
         {
-          title: "Landing Pages",
-          description: "High-conversion landing pages. Sites optimized to convert visitors into customers immediately."
+          problem: "“I need a page that actually sells”",
+          title: "Landing page",
+          description: "One page with a single goal: that whoever arrives writes to you. Fast, mobile-first and measurable."
         },
         {
-          title: "Web Catalogs",
-          description: "Pro Digital Catalogs. Showcase your products with smooth and attractive interfaces, ideal for WhatsApp sales or inquiries."
+          problem: "“I want to show my products without setting up a store”",
+          title: "Web catalog",
+          description: "Your products online, always current, with a WhatsApp button on every item. No cart, no checkout."
         },
         {
-          title: "E-commerce Solutions",
-          description: "E-commerce & Online Stores. Complete, secure, and scalable sales systems to take your business to the next level."
+          problem: "“I want to sell online”",
+          title: "Online store",
+          description: "Full purchase cycle: cart, payments, stock and orders. Ready to grow without being rebuilt."
         },
         {
-          title: "API Architectures",
-          description: "API & Backend Architecture. Robust logic and secure integrations to connect your applications with the world."
+          problem: "“I need my systems to talk to each other”",
+          title: "Integrations and APIs",
+          description: "I connect your store, your ERP and whatever else you use, so you stop moving data by hand."
         },
         {
-          title: "Database Optimization",
-          description: "Database Optimization. Efficient structures and management dashboards to guarantee the integrity and speed of your data."
+          problem: "“My system is slow”",
+          title: "Database optimization",
+          description: "I find what's slowing it down and fix it: queries, indexes and structure. Same system, less waiting."
         },
         {
-          title: "Automations & CI/CD",
-          description: "Automation & Deployment. I optimize your workflow with automatic processes and continuous deployments without errors."
+          problem: "“I do everything by hand and lose time”",
+          title: "Automations",
+          description: "Reports, backups, deploys and repetitive tasks running on their own, without you remembering them."
         },
         {
-          title: "Odoo ERP",
-          description: "Outgrown your spreadsheets? We implement Odoo so stock, sales and invoicing live in one place. Migration, setup and support."
+          problem: "“I need to get my business organized”",
+          title: "Odoo implementation",
+          description: "Outgrown your spreadsheets? I set up Odoo so stock, sales and invoicing live in one place. Migration, setup and support."
+        }
+      ],
+      processTitle: "How I work",
+      processSubtitle: "No surprises. You know what happens at every step before you commit to anything.",
+      processList: [
+        {
+          title: "We talk for 20 minutes",
+          description: "You tell me what you need. No commitment and no jargon. If I'm not the right fit, I'll say so."
+        },
+        {
+          title: "I send you a proposal",
+          description: "Closed price and deadline, in writing. If it doesn't work for you, we don't go ahead. No hard feelings."
+        },
+        {
+          title: "I build it with weekly deliveries",
+          description: "Every week you see real progress. No waiting months in the dark wondering how it's going."
         }
       ],
       whyMeTitle: "Why choose my work?",
@@ -114,11 +139,12 @@ export default function App() {
           description: "I focus on finding the most efficient technical path to achieve your specific commercial goals."
         }
       ],
-      cvTitle: "Ready to see the full picture?",
-      cvSubtitle: "Download my professional CV to explore my technical certifications, deep-dive project case studies, and 5+ years of experience.",
+      aboutTitle: "Who you'd be working with",
+      aboutText: "I'm Osmar Giménez, a software developer based in Paraguay. I work directly with you — no agency, no account manager in between, no team you never get to meet. I invoice locally and we can meet in person if you're in Asunción.",
+      aboutCv: "If you want the long version — certifications, employment history, the whole track record — it's all in my CV.",
       cvButton: "Download CV (PDF)",
-      stackTitle: "Tech Stack",
-      stackSubtitle: "A versatile arsenal of tools to build modern, high-performance applications.",
+      stackToggle: "Technologies I work with",
+      stackHint: "For anyone who wants the technical detail",
       contactTitle: "Ready to scale your digital presence?",
       contactSubtitle: "Let's discuss how my 5+ years of software expertise can drive your business results.",
       contactPrimary: "Send an Email",
@@ -130,42 +156,67 @@ export default function App() {
     },
     es: {
       badge: "Osmar Giménez | Desarrollador de software",
+      heroLocation: "Desde Paraguay",
       headline: "Construyo soluciones tecnológicas que impulsan tu crecimiento",
       subtitle: "Desde landing pages de alto rendimiento hasta arquitecturas backend complejas, gestiono todo el proceso para que puedas enfocarte en tu negocio",
       cta: "Iniciar Proyecto",
+      ctaWhatsapp: "Escribime por WhatsApp",
       services: "Ver Servicios",
-      nav: ['Servicios', 'Por qué yo', 'Stack', 'Contacto'],
+      nav: ['Servicios', 'Cómo trabajo', 'Sobre mí', 'Contacto'],
       workTogether: "Trabajemos Juntos",
-      servicesTitle: "Servicios",
-      servicesSubtitle: "Soluciones técnicas a medida diseñadas para resolver desafíos empresariales complejos.",
+      servicesTitle: "Qué te puedo construir",
+      servicesSubtitle: "Empezá por lo que necesitás resolver. La tecnología viene después.",
       servicesList: [
         {
-          title: "Landing Pages",
-          description: "Landing Pages de Alta Conversión. Sitios optimizados para convertir visitantes en clientes de forma inmediata."
+          problem: "«Necesito una página que venda»",
+          title: "Landing page",
+          description: "Una sola página con un solo objetivo: que el que llega te escriba. Rápida, pensada para celular y medible."
         },
         {
-          title: "Catálogos Web",
-          description: "Catálogos Digitales Pro. Exhibe tus productos con interfaces fluidas y atractivas, ideales para ventas por WhatsApp o consulta."
+          problem: "«Quiero mostrar mis productos sin armar una tienda»",
+          title: "Catálogo web",
+          description: "Tus productos online, siempre actualizados, con botón de WhatsApp en cada uno. Sin carrito ni checkout."
         },
         {
-          title: "Soluciones E-commerce",
-          description: "E-commerce & Tiendas Online. Sistemas de venta completos, seguros y escalables para llevar tu negocio al siguiente nivel."
+          problem: "«Quiero vender por internet»",
+          title: "Tienda online",
+          description: "Ciclo de compra completo: carrito, pagos, stock y pedidos. Lista para crecer sin rehacerla."
         },
         {
-          title: "Arquitectura de APIs",
-          description: "Arquitectura de APIs y Backend. Lógica robusta e integraciones seguras para conectar tus aplicaciones con el mundo."
+          problem: "«Necesito que mis sistemas hablen entre sí»",
+          title: "Integraciones y APIs",
+          description: "Conecto tu tienda, tu ERP y lo que uses, para que dejes de pasar datos a mano."
         },
         {
-          title: "Optimización de BD",
-          description: "Optimización de Bases de Datos. Estructuras eficientes y tableros de gestión para garantizar la integridad y velocidad de tus datos."
+          problem: "«Mi sistema va lento»",
+          title: "Optimización de base de datos",
+          description: "Busco qué lo está frenando y lo corrijo: consultas, índices y estructura. El mismo sistema, con menos espera."
         },
         {
-          title: "Automatización y CI/CD",
-          description: "Automatización y Despliegue. Optimizo tu flujo de trabajo con procesos automáticos y despliegues continuos sin errores."
+          problem: "«Hago todo a mano y pierdo tiempo»",
+          title: "Automatizaciones",
+          description: "Reportes, respaldos, despliegues y tareas repetitivas andando solas, sin que tengas que acordarte."
         },
         {
-          title: "Odoo ERP",
-          description: "¿Tu negocio ya no entra en las planillas? Implementamos Odoo para que stock, ventas y facturación estén en un solo lugar. Migración, configuración y soporte."
+          problem: "«Necesito ordenar mi empresa»",
+          title: "Implementación de Odoo",
+          description: "¿Tu negocio ya no entra en las planillas? Configuro Odoo para que stock, ventas y facturación estén en un solo lugar. Migración, configuración y soporte."
+        }
+      ],
+      processTitle: "Cómo trabajo",
+      processSubtitle: "Sin sorpresas. Sabés qué pasa en cada paso antes de comprometerte a nada.",
+      processList: [
+        {
+          title: "Hablamos 20 minutos",
+          description: "Me contás qué necesitás. Sin compromiso y sin tecnicismos. Si no soy la persona indicada, te lo digo."
+        },
+        {
+          title: "Te paso una propuesta",
+          description: "Precio cerrado y plazo, por escrito. Si no te sirve, no seguimos. Sin resentimientos."
+        },
+        {
+          title: "Desarrollo con entregas semanales",
+          description: "Cada semana ves avances reales. Nada de esperar meses a ciegas preguntándote cómo viene."
         }
       ],
       whyMeTitle: "¿Por qué elegir mi trabajo?",
@@ -188,11 +239,12 @@ export default function App() {
           description: "Me enfoco en encontrar el camino técnico más eficiente para alcanzar tus objetivos comerciales específicos."
         }
       ],
-      cvTitle: "¿Listo para ver mi perfil completo?",
-      cvSubtitle: "Descarga mi CV profesional para conocer mis certificaciones técnicas, casos de estudio detallados y mis más de 5 años de trayectoria.",
+      aboutTitle: "Con quién vas a trabajar",
+      aboutText: "Soy Osmar Giménez, desarrollador de software radicado en Paraguay. Trabajás directamente conmigo: sin agencia, sin ejecutivo de cuentas en el medio, sin un equipo que nunca llegás a conocer. Facturo local y, si estás en Asunción, nos podemos ver en persona.",
+      aboutCv: "Si querés la versión larga —certificaciones, trayectoria laboral, todo el recorrido— está en mi CV.",
       cvButton: "Descargar CV (PDF)",
-      stackTitle: "Stack Tecnológico",
-      stackSubtitle: "Un arsenal versátil de herramientas para construir aplicaciones modernas y de alto rendimiento.",
+      stackToggle: "Tecnologías con las que trabajo",
+      stackHint: "Para quien quiera el detalle técnico",
       contactTitle: "¿Listo para escalar tu presencia digital?",
       contactSubtitle: "Hablemos de cómo mis más de 5 años de experiencia en software pueden impulsar los resultados de tu negocio.",
       contactPrimary: "Enviar un Correo",
@@ -238,7 +290,8 @@ export default function App() {
         </a>
       )}
       <Noise />
-      <GridBackground />
+      {/* Trama de ñandutí de fondo, en lugar de la grilla de puntos generica. */}
+      <NandutiWeave className="fixed inset-0 -z-10 h-full w-full text-brand-primary opacity-[0.07] pointer-events-none" />
       <MouseFollower theme={theme} />
       
       {/* Navigation */}
@@ -260,7 +313,7 @@ export default function App() {
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.1 }}
-                  href={`#${['services', 'whyme', 'stack', 'contact'][i]}`} 
+                  href={`#${['services', 'process', 'about', 'contact'][i]}`}
                   className="hover:text-brand-text transition-colors relative group"
                 >
                   {item}
@@ -311,15 +364,23 @@ export default function App() {
               transition={{ duration: 0.8, ease: "easeOut" }}
               className="flex flex-col items-start text-left"
             >
-              <motion.span 
+              <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.2 }}
-                className="inline-flex items-center gap-2 py-1.5 px-4 rounded-full bg-brand-primary/10 text-brand-primary text-[10px] sm:text-xs font-bold tracking-widest uppercase mb-6 sm:mb-8 border border-brand-primary/20"
+                className="flex flex-wrap items-center gap-2 mb-6 sm:mb-8"
               >
-                <span className="w-2 h-2 rounded-full bg-brand-primary animate-pulse" />
-                {content.badge}
-              </motion.span>
+                <span className="inline-flex items-center gap-2 py-1.5 px-4 rounded-full bg-brand-primary/10 text-brand-primary text-[10px] sm:text-xs font-bold tracking-widest uppercase border border-brand-primary/20">
+                  <span className="w-2 h-2 rounded-full bg-brand-primary animate-pulse" />
+                  {content.badge}
+                </span>
+                {/* Ser de acá es la ventaja frente al perfil anónimo de
+                    marketplace, así que va arriba y no en el pie. */}
+                <span className="inline-flex items-center gap-2 py-1.5 px-4 rounded-full bg-brand-secondary/10 text-brand-secondary text-[10px] sm:text-xs font-bold tracking-widest uppercase border border-brand-secondary/20">
+                  <ICONS.MapPin size={13} />
+                  {content.heroLocation}
+                </span>
+              </motion.div>
               <h1 className="text-3xl sm:text-4xl md:text-6xl font-display font-bold mb-6 sm:mb-8 leading-[1.2] md:leading-[1.1] tracking-tight text-left text-balance">
                 {lang === 'es' ? (
                   <>
@@ -339,10 +400,23 @@ export default function App() {
               />
 
               <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
+                {/* El principal abre la conversacion directamente; mandar al
+                    visitante a scrollear hasta contacto pierde gente. */}
                 <MagneticButton className="w-full sm:w-auto">
-                  <a href="#contact" className="btn-primary flex items-center justify-center gap-3 px-8 sm:px-10 py-4 sm:py-5 text-base sm:text-lg font-bold w-full sm:w-auto">
-                    {content.cta} <ICONS.ArrowRight size={22} />
-                  </a>
+                  {WHATSAPP_URL ? (
+                    <a
+                      href={WHATSAPP_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-primary flex items-center justify-center gap-3 px-8 sm:px-10 py-4 sm:py-5 text-base sm:text-lg font-bold w-full sm:w-auto"
+                    >
+                      <ICONS.MessageCircle size={22} /> {content.ctaWhatsapp}
+                    </a>
+                  ) : (
+                    <a href="#contact" className="btn-primary flex items-center justify-center gap-3 px-8 sm:px-10 py-4 sm:py-5 text-base sm:text-lg font-bold w-full sm:w-auto">
+                      {content.cta} <ICONS.ArrowRight size={22} />
+                    </a>
+                  )}
                 </MagneticButton>
                 <MagneticButton className="w-full sm:w-auto">
                   <a href="#services" className="btn-secondary flex items-center justify-center gap-3 px-8 sm:px-10 py-4 sm:py-5 text-base sm:text-lg font-bold border-brand-border hover:bg-brand-card w-full sm:w-auto">
@@ -416,30 +490,28 @@ export default function App() {
                 >
                   <SpotlightCard className={`p-0 group overflow-hidden transition-all duration-300 ${glowStyles[service.color || 'cyan']}`}>
                     <div className="flex flex-col h-full">
-                      <div className="relative h-48 overflow-hidden border-b border-brand-border">
-                        <img 
-                          src={service.mockup} 
-                          alt={service.title} 
-                          className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700"
-                          referrerPolicy="no-referrer"
+                      <div className="relative h-48 overflow-hidden border-b border-brand-border flex items-center justify-center">
+                        <NandutiSun
+                          seed={idx}
+                          className="h-44 w-44 text-brand-primary opacity-40 group-hover:opacity-80 group-hover:rotate-[15deg] transition-all duration-700 ease-out"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-brand-bg/80 to-transparent" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-brand-bg/80 to-transparent pointer-events-none" />
                         <div className="absolute bottom-4 left-6 w-12 h-12 rounded-xl bg-brand-primary/20 backdrop-blur-md border border-brand-border flex items-center justify-center text-brand-primary group-hover:scale-110 transition-transform duration-500">
                           <Icon size={24} />
                         </div>
                       </div>
                       <div className="p-8 flex flex-col flex-grow">
-                        <h3 className="text-xl font-bold mb-3 font-display text-balance">{serviceContent.title}</h3>
-                        <p className="text-brand-muted text-base leading-relaxed mb-6 text-balance">
+                        {/* El entregable queda como etiqueta y el titular es el
+                            problema dicho por el cliente, no la categoria tecnica. */}
+                        <span className="text-[10px] font-bold uppercase tracking-widest text-brand-primary mb-3">
+                          {serviceContent.title}
+                        </span>
+                        <h3 className="text-xl font-bold mb-3 font-display text-balance">
+                          {serviceContent.problem}
+                        </h3>
+                        <p className="text-brand-muted text-base leading-relaxed text-balance">
                           {serviceContent.description}
                         </p>
-                        <div className="flex flex-wrap gap-2 mt-auto">
-                          {service.tags.map(tag => (
-                            <span key={tag} className="px-2.5 py-1 bg-brand-card border border-brand-border rounded-lg text-[10px] font-medium text-brand-muted">
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
                       </div>
                     </div>
                   </SpotlightCard>
@@ -450,8 +522,58 @@ export default function App() {
         </div>
       </motion.section>
 
+      {/* Como trabajo: responde "que pasa si te escribo" apenas el visitante
+          termina de ver que hacés, que es cuando se lo pregunta. */}
+      <motion.section
+        id="process"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={sectionVariants}
+        className="section-padding relative overflow-hidden"
+      >
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
+          <div className="mb-20">
+            <h2 className="text-4xl md:text-6xl font-display font-bold mb-6 text-balance">{content.processTitle}</h2>
+            <RevealText
+              key={`process-subtitle-${lang}`}
+              text={content.processSubtitle}
+              className="text-xl text-brand-muted max-w-2xl text-balance"
+            />
+          </div>
+
+          <ol className="relative grid gap-12 md:grid-cols-3 md:gap-8">
+            {/* Hilo que une los tres pasos, al modo del radio de un ñandutí. */}
+            <span
+              aria-hidden="true"
+              className="hidden md:block absolute left-0 right-0 top-7 h-px bg-gradient-to-r from-brand-primary/40 via-brand-primary/20 to-transparent"
+            />
+
+            {PROCESS.map((step, idx) => {
+              const StepIcon = ICONS[step.icon as keyof typeof ICONS];
+              const stepContent = content.processList[idx];
+
+              return (
+                <li key={stepContent.title} className="relative flex flex-col">
+                  <div className="flex items-center gap-4 mb-6">
+                    <span className="relative z-10 flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-brand-primary/30 bg-brand-bg text-brand-primary">
+                      <StepIcon size={22} />
+                    </span>
+                    <span className="font-display text-5xl font-bold leading-none text-brand-primary/20">
+                      {idx + 1}
+                    </span>
+                  </div>
+                  <h3 className="mb-3 font-display text-xl font-bold text-balance">{stepContent.title}</h3>
+                  <p className="text-brand-muted leading-relaxed text-balance">{stepContent.description}</p>
+                </li>
+              );
+            })}
+          </ol>
+        </div>
+      </motion.section>
+
       {/* Why Me Section - Bento Grid */}
-      <motion.section 
+      <motion.section
         id="whyme"
         initial="hidden"
         whileInView="visible"
@@ -498,115 +620,102 @@ export default function App() {
         </div>
       </motion.section>
 
-      {/* CV Section */}
-      <motion.section 
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-        variants={sectionVariants}
-        className="section-padding bg-brand-card/20 border-y border-brand-border"
-      >
-        <div className="max-w-7xl mx-auto px-6">
-          <SpotlightCard className="p-12 md:p-20 overflow-hidden relative">
-            <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-brand-primary/10 to-transparent pointer-events-none" />
-            <div className="grid md:grid-cols-2 gap-12 items-center relative z-10 text-left">
-              <div>
-                <h2 className="text-4xl md:text-5xl font-display font-bold mb-6 text-balance">{content.cvTitle}</h2>
-                <p className="text-xl text-brand-muted mb-10 leading-relaxed text-balance">
-                  {content.cvSubtitle}
-                </p>
-                <MagneticButton>
-                  <a href={cvFile} download="CV_Osmar_Gimenez.pdf" className="btn-primary animate-shine flex items-center justify-center gap-3 px-6 py-3 text-base font-bold group w-fit mx-auto md:mx-0" target="_blank" rel="noopener noreferrer">
-                    <ICONS.Download size={24} className="group-hover:translate-y-1 transition-transform" /> {content.cvButton}
-                  </a>
-                </MagneticButton>
-              </div>
-              <div className="flex justify-center md:justify-end">
-                <div className="relative group">
-                  <div className="absolute -inset-4 bg-brand-primary/20 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  <div className="w-64 h-80 bg-brand-card border border-brand-border rounded-xl relative overflow-hidden shadow-2xl transform group-hover:-rotate-3 transition-transform duration-500">
-                    <div className="absolute inset-0 bg-gradient-to-br from-brand-primary/10 to-transparent" />
-                    <div className="p-8 space-y-4">
-                      <div className="flex items-center justify-between mb-4">
-                        <ICONS.FileText size={32} className="text-brand-primary" />
-                        <div className="w-12 h-1 bg-brand-primary/30 rounded" />
-                      </div>
-                      <div className="w-3/4 h-3 bg-brand-text/20 rounded" />
-                      <div className="w-full h-2 bg-brand-text/10 rounded" />
-                      <div className="w-full h-2 bg-brand-text/10 rounded" />
-                      <div className="w-5/6 h-2 bg-brand-text/10 rounded" />
-                      <div className="pt-8 space-y-3">
-                        <div className="flex items-center gap-2">
-                          <div className="w-4 h-4 rounded-full bg-brand-secondary/20" />
-                          <div className="w-full h-2 bg-brand-text/5 rounded" />
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <div className="w-4 h-4 rounded-full bg-brand-primary/20" />
-                          <div className="w-full h-2 bg-brand-text/5 rounded" />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="absolute bottom-0 left-0 w-full h-1/3 bg-gradient-to-t from-brand-bg to-transparent" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </SpotlightCard>
-        </div>
-      </motion.section>
-
-      {/* Tech Stack Section */}
-      <motion.section 
-        id="stack"
+      {/* Sobre mi. Antes era la seccion "Descargar CV" y ocupaba una pantalla
+          entera: el CV dejo de ser la oferta y pasó a ser el respaldo. */}
+      <motion.section
+        id="about"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
         variants={sectionVariants}
         className="section-padding bg-brand-card/20 border-y border-brand-border relative overflow-hidden"
       >
-        <div className="absolute inset-0 bg-grid-pattern opacity-10 pointer-events-none" />
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-6xl font-display font-bold mb-6 text-balance">{content.stackTitle}</h2>
-            <RevealText 
-              key={`stack-subtitle-${lang}`}
-              text={content.stackSubtitle}
-              className="text-xl text-brand-muted max-w-2xl mx-auto justify-center text-balance"
-            />
-          </div>
-          
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {TECH_STACK.map((category) => {
-              const CategoryIcon = ICONS[category.icon as keyof typeof ICONS];
-              return (
-                <SpotlightCard key={category.category} className="p-8 h-full border-brand-border hover:border-brand-primary/50 transition-colors">
-                  <div className="flex items-center gap-4 mb-8">
-                    <div className="p-3 rounded-xl bg-brand-primary/10 text-brand-primary">
-                      <CategoryIcon size={24} />
-                    </div>
-                    <h4 className="text-xl font-bold font-display">{category.category}</h4>
-                  </div>
-                  <div className="flex flex-wrap gap-3">
-                    {category.items.map(item => {
-                      const ItemIcon = ICONS[item.icon as keyof typeof ICONS];
-                      return (
-                        <div 
-                          key={item.name} 
-                          className="tech-chip flex items-center gap-2 px-3 py-2 bg-brand-card border border-brand-border rounded-xl text-sm text-brand-muted hover:text-brand-text transition-all duration-300 group/tech"
-                          style={{ '--hover-color': item.color } as React.CSSProperties}
-                        >
-                          <ItemIcon size={16} className="text-brand-muted group-hover/tech:text-[var(--hover-color)] transition-colors" />
-                          <span className="font-medium">{item.name}</span>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </SpotlightCard>
-              );
-            })}
-          </div>
+        <NandutiSun
+          seed={1}
+          className="pointer-events-none absolute -right-16 -top-16 h-72 w-72 text-brand-primary opacity-[0.12]"
+        />
+        <div className="max-w-3xl mx-auto px-6 relative z-10">
+          <h2 className="text-4xl md:text-5xl font-display font-bold mb-8 text-balance">{content.aboutTitle}</h2>
+          <p className="text-xl text-brand-muted leading-relaxed mb-8 text-balance">
+            {content.aboutText}
+          </p>
+          <p className="text-base text-brand-muted leading-relaxed mb-6 text-balance">
+            {content.aboutCv}
+          </p>
+          <a
+            href={cvFile}
+            download="CV_Osmar_Gimenez.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group inline-flex items-center gap-2 text-sm font-semibold text-brand-primary underline-offset-4 hover:underline"
+          >
+            <ICONS.Download size={16} className="transition-transform group-hover:translate-y-0.5" />
+            {content.cvButton}
+          </a>
         </div>
       </motion.section>
+
+      {/* Stack. Veintiséis tecnologias no le dicen nada a quien compra una
+          landing, asi que van al final y cerradas: siguen ahi para el que las
+          busca, sin ocupar una pantalla de la ruta de conversion. */}
+      <section
+        id="stack"
+        className="py-16 bg-brand-card/20 border-y border-brand-border relative overflow-hidden"
+      >
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
+          <details className="group/stack">
+            <summary className="flex cursor-pointer list-none items-center justify-between gap-4 rounded-xl border border-brand-border bg-brand-card/50 px-6 py-5 transition-colors hover:border-brand-primary/50">
+              <span className="flex items-center gap-4">
+                <ICONS.Terminal size={20} className="text-brand-primary" />
+                <span className="text-left">
+                  <span className="block font-display text-lg font-bold">
+                    {content.stackToggle}
+                    <span className="ml-2 text-brand-muted font-normal">
+                      ({TECH_STACK.reduce((n, c) => n + c.items.length, 0)})
+                    </span>
+                  </span>
+                  <span className="block text-sm text-brand-muted">{content.stackHint}</span>
+                </span>
+              </span>
+              <ICONS.ArrowRight
+                size={20}
+                className="shrink-0 text-brand-muted transition-transform duration-300 group-open/stack:rotate-90"
+              />
+            </summary>
+
+            <div className="grid gap-8 pt-8 sm:grid-cols-2 lg:grid-cols-4">
+              {TECH_STACK.map((category) => {
+                const CategoryIcon = ICONS[category.icon as keyof typeof ICONS];
+                return (
+                  <SpotlightCard key={category.category} className="p-8 h-full border-brand-border hover:border-brand-primary/50 transition-colors">
+                    <div className="flex items-center gap-4 mb-8">
+                      <div className="p-3 rounded-xl bg-brand-primary/10 text-brand-primary">
+                        <CategoryIcon size={24} />
+                      </div>
+                      <h4 className="text-xl font-bold font-display">{category.category}</h4>
+                    </div>
+                    <div className="flex flex-wrap gap-3">
+                      {category.items.map(item => {
+                        const ItemIcon = ICONS[item.icon as keyof typeof ICONS];
+                        return (
+                          <div
+                            key={item.name}
+                            className="tech-chip flex items-center gap-2 px-3 py-2 bg-brand-card border border-brand-border rounded-xl text-sm text-brand-muted hover:text-brand-text transition-all duration-300 group/tech"
+                            style={{ '--hover-color': item.color } as React.CSSProperties}
+                          >
+                            <ItemIcon size={16} className="text-brand-muted group-hover/tech:text-[var(--hover-color)] transition-colors" />
+                            <span className="font-medium">{item.name}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </SpotlightCard>
+                );
+              })}
+            </div>
+          </details>
+        </div>
+      </section>
 
       {/* Contact Section */}
       <motion.section 

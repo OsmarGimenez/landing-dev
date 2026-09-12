@@ -74,63 +74,27 @@ export const ICONS = {
   Layout
 };
 
+// Los servicios ya no cargan una foto de stock: la ilustracion de cada tarjeta
+// es un sol de ñanduti generado a partir del indice (ver components/Nanduti).
+//
+// Tampoco listan tecnologias. Al cliente le importa que problema le resolves,
+// no con que lo construis, y el detalle tecnico ya tiene su propia seccion.
 export const SERVICES = [
-  {
-    title: "Landing Pages",
-    description: "High-conversion landing pages designed for speed and impact.",
-    icon: "Globe",
-    tags: ["React", "Tailwind CSS", "Framer Motion"],
-    mockup: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
-    color: "cyan"
-  },
-  {
-    title: "Web Catalogs",
-    description: "Professional digital catalogs to showcase your products effectively.",
-    icon: "Layers",
-    tags: ["Next.js", "Flutter Web"],
-    mockup: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=800&q=80",
-    color: "indigo"
-  },
-  {
-    title: "E-commerce Solutions",
-    description: "Full shopping cycles and scalable online stores.",
-    icon: "Rocket",
-    tags: ["React", "Stripe/Payments", "Node.js"],
-    mockup: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80",
-    color: "rose"
-  },
-  {
-    title: "API Architectures",
-    description: "Secure and scalable backends for your applications.",
-    icon: "Server",
-    tags: ["Laravel", "Python", "C#", "Java"],
-    mockup: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=80",
-    color: "amber"
-  },
-  {
-    title: "Database Optimization",
-    description: "High-performance data management and integrity.",
-    icon: "Database",
-    tags: ["PostgreSQL", "MySQL", "Oracle", "SQL Server"],
-    mockup: "https://images.unsplash.com/photo-1597852074816-d933c7d2b988?auto=format&fit=crop&w=800&q=80",
-    color: "emerald"
-  },
-  {
-    title: "Automations & CI/CD",
-    description: "Efficiency and reliable software delivery.",
-    icon: "Zap",
-    tags: ["Docker", "GitHub Actions", "Linux", "CI/CD"],
-    mockup: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80",
-    color: "sky"
-  },
-  {
-    title: "Odoo ERP",
-    description: "Odoo implementation and integrations for growing businesses.",
-    icon: "Box",
-    tags: ["Odoo", "Python", "PostgreSQL", "n8n"],
-    mockup: "https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&fit=crop&w=800&q=80",
-    color: "violet"
-  }
+  {title: "Landing Pages", icon: "Globe", color: "cyan"},
+  {title: "Web Catalogs", icon: "Layers", color: "indigo"},
+  {title: "E-commerce Solutions", icon: "Rocket", color: "rose"},
+  {title: "API Architectures", icon: "Server", color: "amber"},
+  {title: "Database Optimization", icon: "Database", color: "emerald"},
+  {title: "Automations & CI/CD", icon: "Zap", color: "sky"},
+  {title: "Odoo ERP", icon: "Box", color: "violet"}
+];
+
+// Los tres pasos de "Como trabajo". El texto vive en las traducciones de
+// App.tsx; aca solo el icono de cada paso.
+export const PROCESS = [
+  {icon: "MessageCircle"},
+  {icon: "FileText"},
+  {icon: "RefreshCw"}
 ];
 
 export const WHY_ME = [
@@ -205,9 +169,8 @@ export const TECH_STACK = [
   }
 ];
 
-// TODO: completar con tu numero en formato internacional sin signos, ej: "595981123456".
-// Mientras este vacio, el boton de WhatsApp no se renderiza.
-export const WHATSAPP_NUMBER = "";
+// Formato internacional sin signos ni espacios: 595 (Paraguay) + 986544857.
+export const WHATSAPP_NUMBER = "595986544857";
 
 export const WHATSAPP_MESSAGE =
   "Hola Osmar, vi tu sitio y quiero consultarte por un proyecto.";
