@@ -117,3 +117,19 @@ Formato por entrada:
   DOM, cargar la pagina y mirar la consola. Con esta CSP, `lint` y `build`
   verdes no dicen nada sobre si el sitio arranca. Sospechar en particular de
   todo lo que inyecte scripts, iframes o estilos.
+
+## 2026-09-15 — Un asset renombrado rompe el build, no solo el asset
+- **Qué pasó:** el CV que se descargaba estaba corrupto —tabla de referencias
+  cruzadas rota y streams dañados, cero texto extraíble— y Osmar lo reemplazó
+  por uno sano. Pero el archivo nuevo vino con guiones bajos
+  (`CV_Osmar_Gimenez.pdf`) y `App.tsx` importa el de guiones
+  (`CV-Osmar-Gimenez.pdf`), así que el proyecto directamente dejó de compilar:
+  `Could not resolve "./CV-Osmar-Gimenez.pdf"`.
+- **Corrección:** renombrar el archivo nuevo al nombre con guiones, en vez de
+  cambiar el import. Así git lo registra como cambio de contenido en la misma
+  ruta y no como borrar+crear, y el nombre con el que se descarga no se toca:
+  eso lo fija el atributo `download`, que dice `CV_Osmar_Gimenez.pdf`.
+- **Regla derivada:** los assets importados desde el código se reemplazan
+  conservando el nombre exacto. Y al validar un PDF no alcanza con que abra:
+  el viejo reportaba «1 página» igual, pero con cero caracteres de texto.
+  Verificar que extraiga contenido, no solo que tenga cabecera y `%%EOF`.
