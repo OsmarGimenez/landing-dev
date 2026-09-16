@@ -102,12 +102,14 @@ La CSP pudo quedar estricta —sin `'unsafe-inline'`— porque el build no tiene
 scripts ni estilos inline y solo pide dos orígenes externos, los de las fuentes.
 
 `require-trusted-types-for 'script'` era el riesgo: rompe cualquier asignación a
-`innerHTML`. Se probó antes de confiar y React 19 resultó compatible: cero
-violaciones en consola.
+`innerHTML` o a `script.src`. Se probó antes de confiar y React 19 resultó
+compatible: cero violaciones en consola.
 
-**Si alguna vez hay que sumar un tercero** (analítica, mapa, chat embebido), su
-origen va agregado a la CSP en los dos lugares, que tienen que quedar
-sincronizados.
+**Pero eso vale para React, no para lo que se agregue después.** Ese mismo día,
+sumar `@vercel/analytics` dejó la página completamente en blanco, y ni el lint
+ni el build se enteraron. Antes de agregar cualquier dependencia que toque el
+DOM, leer [[csp-estricta-y-dependencias]]: tiene la lista de qué revisar y cómo
+se resolvió sin aflojar la política.
 
 ## SEO y Agentic Browsing
 
@@ -123,4 +125,9 @@ sin existir.
 100 en las cuatro categorías, escritorio y móvil, con cero auditorías fallidas.
 CLS 0.00.
 
-Relacionado: [[tailwind-capas-y-cascada]], [[historia-de-optimizacion-del-bundle]]
+Relacionado: [[csp-estricta-y-dependencias]] detalla como convivir con la
+politica que se agrego aca, y por que agregar una dependencia puede romper
+el sitio sin que el build se entere.
+
+Ver tambien [[tailwind-capas-y-cascada]] e
+[[historia-de-optimizacion-del-bundle]].
