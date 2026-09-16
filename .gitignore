@@ -9,3 +9,6 @@ coverage/
 
 # Obsidian (config local del editor; las notas SI se versionan)
 .obsidian/
+
+# Config local de Claude Code (launch.json del preview, worktrees)
+.claude/
