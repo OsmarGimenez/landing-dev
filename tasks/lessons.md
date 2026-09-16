@@ -61,6 +61,13 @@ Formato por entrada:
 - **Regla derivada:** antes de declarar roto un estilo animado o con
   transición, medirlo con las transiciones desactivadas. Una captura negra o un
   valor que no cambia es, casi siempre, el panel y no la página.
+- **Ampliación (2026-09-15):** volvió a pasar, y esta vez llevó a reportar como
+  bug que `MotionConfig` dejaba el hero en `opacity: 0`. No era cierto: el
+  panel no estaba pintando, `requestAnimationFrame` no disparaba nunca y las
+  animaciones de `motion` —que corren sobre rAF— jamás avanzaban.
+  **Diagnóstico rápido:** contar fotogramas con rAF durante ~600 ms. Si son
+  cero, ninguna medición de animación de ese tab sirve. Conviene correrlo
+  ANTES de medir cualquier cosa animada, no después de sacar conclusiones.
 
 ## 2026-09-15 — Auditar con extensiones del navegador puestas
 - **Qué pasó:** el informe de Lighthouse traía Performance 94 y cifras como

@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform } from 'motion/react';
+import { MotionConfig, motion, useScroll, useTransform } from 'motion/react';
 import React, { useState, useEffect, useRef } from 'react';
 import cvFile from './CV-Osmar-Gimenez.pdf';
 import { ICONS, SERVICES, PROCESS, WHY_ME, CONTACT_INFO, WHATSAPP_URL } from './constants';
@@ -46,7 +46,12 @@ export default function App() {
 
 
   const [theme, setTheme] = useState<'light' | 'dark'>('dark');
-  const [lang, setLang] = useState<'en' | 'es'>('es');
+
+  // El idioma arranca de la URL, no de un valor fijo: asi ?lang=en es una
+  // direccion compartible y no se pierde al recargar.
+  const [lang, setLang] = useState<'en' | 'es'>(() =>
+    new URLSearchParams(window.location.search).get('lang') === 'en' ? 'en' : 'es'
+  );
 
   useEffect(() => {
     if (theme === 'dark') {
@@ -55,6 +60,29 @@ export default function App() {
       document.documentElement.classList.remove('dark');
     }
   }, [theme]);
+
+  useEffect(() => {
+    // El <html lang> venia fijo en "es". Al pasar a ingles, un lector de
+    // pantalla seguia leyendo el contenido con fonetica española.
+    document.documentElement.lang = lang;
+
+    // La URL acompaña al idioma para que cada version tenga la suya y Google
+    // pueda indexar las dos. replaceState y no push: cambiar de idioma no es
+    // navegar, y no deberia llenar el boton de atras.
+    const url = new URL(window.location.href);
+    if (lang === 'en') {
+      url.searchParams.set('lang', 'en');
+    } else {
+      url.searchParams.delete('lang');
+    }
+    window.history.replaceState(null, '', url);
+
+    const canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+    if (canonical) canonical.href = url.href;
+
+    const locale = document.querySelector<HTMLMetaElement>('meta[property="og:locale"]');
+    if (locale) locale.content = lang === 'en' ? 'en_US' : 'es_PY';
+  }, [lang]);
 
   const t = {
     en: {
@@ -280,6 +308,12 @@ export default function App() {
   };
 
   return (
+    /* reducedMotion="user" hace que motion respete prefers-reduced-motion en
+       todo el arbol de una: eran 24 componentes animados y solo el carrusel y
+       el ñanduti lo contemplaban, porque su animacion es CSS y se atendio a
+       mano. Para alguien con sensibilidad al movimiento la pagina entera se
+       agitaba, y Lighthouse no lo mide. */
+    <MotionConfig reducedMotion="user">
     <div className="min-h-screen selection:bg-brand-primary/30 overflow-x-hidden bg-brand-bg font-sans text-brand-text transition-colors duration-500">
       {WHATSAPP_URL && (
         <a
@@ -791,5 +825,6 @@ export default function App() {
         </div>
       </footer>
     </div>
+    </MotionConfig>
   );
 }

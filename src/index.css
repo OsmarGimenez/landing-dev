@@ -332,3 +332,23 @@
     transparent 100%
   );
 }
+
+/* Red de seguridad para movimiento reducido.
+
+   MotionConfig cubre todo lo animado con `motion`, pero no las animaciones que
+   son CSS puro: los blobs del hero y el brillo de los botones quedaban fuera,
+   y cualquier animacion que se agregue mas adelante tambien quedaria.
+
+   Esta regla las neutraliza a todas de una. No se usa `animation: none` porque
+   eso devuelve el elemento a su estado inicial y algo podria quedar invisible;
+   una duracion minima lo deja en el estado final al instante. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
