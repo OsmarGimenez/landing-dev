@@ -325,14 +325,22 @@ export default function App() {
             </div>
 
             <div className="flex items-center gap-3 md:gap-4 md:border-l md:border-brand-border md:pl-8">
-              <button 
+              <button
                 onClick={() => setLang(lang === 'en' ? 'es' : 'en')}
+                aria-label={lang === 'en' ? 'Cambiar a español' : 'Switch to English'}
                 className="text-[10px] sm:text-xs font-bold hover:text-brand-primary transition-colors uppercase p-2"
               >
                 {lang === 'en' ? 'ES' : 'EN'}
               </button>
-              <button 
+              {/* Solo lleva icono, asi que el nombre accesible tiene que venir
+                  del aria-label o el boton queda mudo para un lector de pantalla. */}
+              <button
                 onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                aria-label={
+                  theme === 'dark'
+                    ? (lang === 'es' ? 'Activar tema claro' : 'Switch to light theme')
+                    : (lang === 'es' ? 'Activar tema oscuro' : 'Switch to dark theme')
+                }
                 className="p-2 rounded-full hover:bg-brand-card transition-colors text-brand-text"
               >
                 {theme === 'dark' ? <ICONS.Sun size={18} /> : <ICONS.Moon size={18} />}
@@ -340,7 +348,16 @@ export default function App() {
             </div>
 
             <MagneticButton>
-              <a href="#contact" className="group flex items-center justify-center bg-transparent border border-neutral-700 rounded-full p-3 text-neutral-800 dark:text-neutral-300 md:p-0 md:px-6 md:py-2.5 md:bg-blue-600 md:text-white md:border-transparent md:border-none md:rounded-lg md:shadow-lg md:shadow-blue-600/20 hover:bg-neutral-100 dark:hover:bg-neutral-800 md:hover:bg-blue-700 transition-all duration-300">
+              {/* En movil el texto se oculta y queda solo el icono, asi que el
+                  aria-label es lo unico que nombra el enlace en ese tamaño.
+                  El color del texto se fuerza a blanco desde md: heredando
+                  `dark:text-neutral-300` daba 3.54 de contraste sobre el azul,
+                  por debajo del 4.5 que pide WCAG. */}
+              <a
+                href="#contact"
+                aria-label={content.workTogether}
+                className="group flex items-center justify-center bg-transparent border border-neutral-700 rounded-full p-3 text-neutral-800 dark:text-neutral-300 md:p-0 md:px-6 md:py-2.5 md:bg-blue-600 md:text-white md:dark:text-white md:border-transparent md:border-none md:rounded-lg md:shadow-lg md:shadow-blue-600/20 hover:bg-neutral-100 dark:hover:bg-neutral-800 md:hover:bg-blue-700 transition-all duration-300"
+              >
                 <span className="hidden md:inline text-sm font-semibold whitespace-nowrap">{content.workTogether}</span>
                 <span className="flex items-center justify-center md:hidden leading-none"><ICONS.Mail size={18} className="group-hover:scale-110 transition-transform md:group-hover:scale-100" /></span>
               </a>
@@ -349,382 +366,388 @@ export default function App() {
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <section ref={heroRef} className="relative pt-32 pb-20 md:pt-48 md:pb-32 min-h-screen flex items-center overflow-hidden">
-        <FloatingShapes />
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10 opacity-20 pointer-events-none">
-          <motion.div style={{ y: y1, opacity }} className="absolute top-20 left-1/4 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-brand-primary/30 rounded-full blur-[80px] md:blur-[150px] animate-blob" />
-          <motion.div style={{ y: useTransform(scrollYProgress, [0, 1], [0, -150]), opacity }} className="absolute bottom-20 right-1/4 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-brand-secondary/20 rounded-full blur-[80px] md:blur-[150px] animate-blob animation-delay-2000" />
-        </div>
+      {/* <main> es el landmark que faltaba: sin el, quien navega con
+          lector de pantalla no tiene forma de saltar directo al contenido. */}
+      <main>
+
+        {/* Hero Section */}
+        <section ref={heroRef} className="relative pt-32 pb-20 md:pt-48 md:pb-32 min-h-screen flex items-center overflow-hidden">
+          <FloatingShapes />
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10 opacity-20 pointer-events-none">
+            <motion.div style={{ y: y1, opacity }} className="absolute top-20 left-1/4 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-brand-primary/30 rounded-full blur-[80px] md:blur-[150px] animate-blob" />
+            <motion.div style={{ y: useTransform(scrollYProgress, [0, 1], [0, -150]), opacity }} className="absolute bottom-20 right-1/4 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-brand-secondary/20 rounded-full blur-[80px] md:blur-[150px] animate-blob animation-delay-2000" />
+          </div>
         
-        <div className="max-w-7xl mx-auto px-6 w-full">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
-            {/* Left Column: Content */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-              className="flex flex-col items-start text-left"
-            >
-              {/* Una linea, no dos pildoras. El par de chips redondeados con
-                  punto que late y `uppercase tracking-widest` es la firma
-                  visual del landing generado; esto se lee como cabecera de
-                  publicacion, que es lo contrario. */}
+          <div className="max-w-7xl mx-auto px-6 w-full">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
+              {/* Left Column: Content */}
               <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.15 }}
-                className="mb-8 flex items-center gap-3 text-sm text-brand-muted"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+                className="flex flex-col items-start text-left"
               >
-                <NandutiSun seed={1} className="h-5 w-5 shrink-0 text-brand-primary" />
-                <span>{content.badge}</span>
-                <span aria-hidden="true" className="hidden h-px w-6 bg-brand-border sm:block" />
-                <span className="hidden items-center gap-1.5 text-brand-secondary sm:inline-flex">
-                  <ICONS.MapPin size={14} />
-                  {content.heroLocation}
-                </span>
-              </motion.div>
-              {/* Sin degradado en el texto: es otro tic del landing generado, y
-                  ademas baja el contraste justo en la linea mas importante. La
-                  frase clave se marca con un hilo tejido debajo. */}
-              <h1 className="mb-6 text-balance text-left font-display text-4xl font-extrabold leading-[1.08] tracking-[-0.03em] sm:mb-8 sm:text-5xl md:text-[4.25rem]">
-                {lang === 'es' ? (
-                  <>
-                    Construyo soluciones tecnológicas que{' '}
-                    <ThreadUnderline>impulsan tu crecimiento.</ThreadUnderline>
-                  </>
-                ) : (
-                  <>
-                    I build digital solutions that{' '}
-                    <ThreadUnderline>drive business growth.</ThreadUnderline>
-                  </>
-                )}
-              </h1>
-              
-              <RevealText 
-                key={lang}
-                text={content.subtitle}
-                className="text-lg md:text-2xl text-brand-muted leading-relaxed font-light mb-10 sm:mb-12"
-              />
-
-              <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
-                {/* El principal abre la conversacion directamente; mandar al
-                    visitante a scrollear hasta contacto pierde gente. */}
-                <MagneticButton className="w-full sm:w-auto">
-                  {WHATSAPP_URL ? (
-                    <a
-                      href={WHATSAPP_URL}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="btn-whatsapp flex w-full items-center justify-center gap-3 px-8 py-4 text-base font-bold sm:w-auto sm:px-10 sm:py-5 sm:text-lg"
-                    >
-                      <BrandIcon slug="whatsapp" size={24} /> {content.ctaWhatsapp}
-                    </a>
+                {/* Una linea, no dos pildoras. El par de chips redondeados con
+                    punto que late y `uppercase tracking-widest` es la firma
+                    visual del landing generado; esto se lee como cabecera de
+                    publicacion, que es lo contrario. */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.15 }}
+                  className="mb-8 flex items-center gap-3 text-sm text-brand-muted"
+                >
+                  <NandutiSun seed={1} className="h-5 w-5 shrink-0 text-brand-primary" />
+                  <span>{content.badge}</span>
+                  <span aria-hidden="true" className="hidden h-px w-6 bg-brand-border sm:block" />
+                  <span className="hidden items-center gap-1.5 text-brand-secondary sm:inline-flex">
+                    <ICONS.MapPin size={14} />
+                    {content.heroLocation}
+                  </span>
+                </motion.div>
+                {/* Sin degradado en el texto: es otro tic del landing generado, y
+                    ademas baja el contraste justo en la linea mas importante. La
+                    frase clave se marca con un hilo tejido debajo. */}
+                <h1 className="mb-6 text-balance text-left font-display text-4xl font-extrabold leading-[1.08] tracking-[-0.03em] sm:mb-8 sm:text-5xl md:text-[4.25rem]">
+                  {lang === 'es' ? (
+                    <>
+                      Construyo soluciones tecnológicas que{' '}
+                      <ThreadUnderline>impulsan tu crecimiento.</ThreadUnderline>
+                    </>
                   ) : (
-                    <a href="#contact" className="btn-primary flex items-center justify-center gap-3 px-8 sm:px-10 py-4 sm:py-5 text-base sm:text-lg font-bold w-full sm:w-auto">
-                      {content.cta} <ICONS.ArrowRight size={22} />
-                    </a>
+                    <>
+                      I build digital solutions that{' '}
+                      <ThreadUnderline>drive business growth.</ThreadUnderline>
+                    </>
                   )}
-                </MagneticButton>
-                <MagneticButton className="w-full sm:w-auto">
-                  <a href="#services" className="btn-secondary flex items-center justify-center gap-3 px-8 sm:px-10 py-4 sm:py-5 text-base sm:text-lg font-bold border-brand-border hover:bg-brand-card w-full sm:w-auto">
-                    {content.services}
-                  </a>
-                </MagneticButton>
-              </div>
-            </motion.div>
+                </h1>
+              
+                <RevealText 
+                  key={lang}
+                  text={content.subtitle}
+                  className="text-lg md:text-2xl text-brand-muted leading-relaxed font-light mb-10 sm:mb-12"
+                />
 
-            {/* Ñandutí en lugar de la ilustración de stock. Es SVG generado en
-                el propio bundle, así que no hay chunk ni JSON que descargar. */}
-            <div className="hidden lg:flex justify-center items-center relative w-full h-[450px]">
-              <NandutiHero className="w-full max-w-[420px]" />
+                <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
+                  {/* El principal abre la conversacion directamente; mandar al
+                      visitante a scrollear hasta contacto pierde gente. */}
+                  <MagneticButton className="w-full sm:w-auto">
+                    {WHATSAPP_URL ? (
+                      <a
+                        href={WHATSAPP_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn-whatsapp flex w-full items-center justify-center gap-3 px-8 py-4 text-base font-bold sm:w-auto sm:px-10 sm:py-5 sm:text-lg"
+                      >
+                        <BrandIcon slug="whatsapp" size={24} /> {content.ctaWhatsapp}
+                      </a>
+                    ) : (
+                      <a href="#contact" className="btn-primary flex items-center justify-center gap-3 px-8 sm:px-10 py-4 sm:py-5 text-base sm:text-lg font-bold w-full sm:w-auto">
+                        {content.cta} <ICONS.ArrowRight size={22} />
+                      </a>
+                    )}
+                  </MagneticButton>
+                  <MagneticButton className="w-full sm:w-auto">
+                    <a href="#services" className="btn-secondary flex items-center justify-center gap-3 px-8 sm:px-10 py-4 sm:py-5 text-base sm:text-lg font-bold border-brand-border hover:bg-brand-card w-full sm:w-auto">
+                      {content.services}
+                    </a>
+                  </MagneticButton>
+                </div>
+              </motion.div>
+
+              {/* Ñandutí en lugar de la ilustración de stock. Es SVG generado en
+                  el propio bundle, así que no hay chunk ni JSON que descargar. */}
+              <div className="hidden lg:flex justify-center items-center relative w-full h-[450px]">
+                <NandutiHero className="w-full max-w-[420px]" />
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Services Section */}
-      <motion.section 
-        id="services"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-        variants={sectionVariants}
-        className="section-tint relative overflow-hidden py-20"
-      >
-        <div className="absolute inset-0 bg-dot-pattern opacity-10 pointer-events-none" />
-        <div className="relative z-10 mx-auto w-full max-w-7xl px-6 md:px-12 lg:px-24">
-          <div className="mb-20">
-            <h2 className="text-4xl md:text-6xl font-display font-bold mb-6">{content.servicesTitle}</h2>
-            <RevealText 
-              key={`subtitle-${lang}`}
-              text={content.servicesSubtitle}
-              className="text-xl text-brand-muted max-w-2xl text-balance"
-            />
-          </div>
+        {/* Services Section */}
+        <motion.section 
+          id="services"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={sectionVariants}
+          className="section-tint relative overflow-hidden py-20"
+        >
+          <div className="absolute inset-0 bg-dot-pattern opacity-10 pointer-events-none" />
+          <div className="relative z-10 mx-auto w-full max-w-7xl px-6 md:px-12 lg:px-24">
+            <div className="mb-20">
+              <h2 className="text-4xl md:text-6xl font-display font-bold mb-6">{content.servicesTitle}</h2>
+              <RevealText 
+                key={`subtitle-${lang}`}
+                text={content.servicesSubtitle}
+                className="text-xl text-brand-muted max-w-2xl text-balance"
+              />
+            </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {SERVICES.map((service, idx) => {
-              const Icon = ICONS[service.icon as keyof typeof ICONS];
-              const serviceContent = content.servicesList[idx];
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {SERVICES.map((service, idx) => {
+                const Icon = ICONS[service.icon as keyof typeof ICONS];
+                const serviceContent = content.servicesList[idx];
               
-              const glowStyles: Record<string, string> = {
-                cyan: 'hover:border-cyan-500/30 hover:shadow-[0_0_20px_-5px_rgba(165,243,252,0.1)] dark:hover:shadow-[0_0_35px_-5px_rgba(6,182,212,0.4)] [--glow-color:rgba(165,243,252,0.1)] dark:[--glow-color:rgba(6,182,212,0.4)] [--border-glow-color:rgba(165,243,252,0.3)] dark:[--border-glow-color:rgba(6,182,212,0.6)] [--glow-blend:soft-light] dark:[--glow-blend:normal]',
-                indigo: 'hover:border-indigo-500/30 hover:shadow-[0_0_20px_-5px_rgba(199,210,254,0.1)] dark:hover:shadow-[0_0_35px_-5px_rgba(99,102,241,0.4)] [--glow-color:rgba(199,210,254,0.1)] dark:[--glow-color:rgba(99,102,241,0.4)] [--border-glow-color:rgba(199,210,254,0.3)] dark:[--border-glow-color:rgba(99,102,241,0.6)] [--glow-blend:soft-light] dark:[--glow-blend:normal]',
-                rose: 'hover:border-rose-500/30 hover:shadow-[0_0_20px_-5px_rgba(254,205,211,0.1)] dark:hover:shadow-[0_0_35px_-5px_rgba(244,63,94,0.4)] [--glow-color:rgba(254,205,211,0.1)] dark:[--glow-color:rgba(244,63,94,0.4)] [--border-glow-color:rgba(254,205,211,0.3)] dark:[--border-glow-color:rgba(244,63,94,0.6)] [--glow-blend:soft-light] dark:[--glow-blend:normal]',
-                amber: 'hover:border-amber-500/30 hover:shadow-[0_0_20px_-5px_rgba(253,230,138,0.1)] dark:hover:shadow-[0_0_35px_-5px_rgba(245,158,11,0.4)] [--glow-color:rgba(253,230,138,0.1)] dark:[--glow-color:rgba(245,158,11,0.4)] [--border-glow-color:rgba(253,230,138,0.3)] dark:[--border-glow-color:rgba(245,158,11,0.6)] [--glow-blend:soft-light] dark:[--glow-blend:normal]',
-                emerald: 'hover:border-emerald-500/30 hover:shadow-[0_0_20px_-5px_rgba(167,243,208,0.1)] dark:hover:shadow-[0_0_35px_-5px_rgba(16,185,129,0.4)] [--glow-color:rgba(167,243,208,0.1)] dark:[--glow-color:rgba(16,185,129,0.4)] [--border-glow-color:rgba(167,243,208,0.3)] dark:[--border-glow-color:rgba(16,185,129,0.6)] [--glow-blend:soft-light] dark:[--glow-blend:normal]',
-                sky: 'hover:border-sky-500/30 hover:shadow-[0_0_20px_-5px_rgba(186,230,253,0.1)] dark:hover:shadow-[0_0_35px_-5px_rgba(14,165,233,0.4)] [--glow-color:rgba(186,230,253,0.1)] dark:[--glow-color:rgba(14,165,233,0.4)] [--border-glow-color:rgba(186,230,253,0.3)] dark:[--border-glow-color:rgba(14,165,233,0.6)] [--glow-blend:soft-light] dark:[--glow-blend:normal]',
-                violet: 'hover:border-violet-500/30 hover:shadow-[0_0_20px_-5px_rgba(221,214,254,0.1)] dark:hover:shadow-[0_0_35px_-5px_rgba(139,92,246,0.4)] [--glow-color:rgba(221,214,254,0.1)] dark:[--glow-color:rgba(139,92,246,0.4)] [--border-glow-color:rgba(221,214,254,0.3)] dark:[--border-glow-color:rgba(139,92,246,0.6)] [--glow-blend:soft-light] dark:[--glow-blend:normal]',
-              };
+                const glowStyles: Record<string, string> = {
+                  cyan: 'hover:border-cyan-500/30 hover:shadow-[0_0_20px_-5px_rgba(165,243,252,0.1)] dark:hover:shadow-[0_0_35px_-5px_rgba(6,182,212,0.4)] [--glow-color:rgba(165,243,252,0.1)] dark:[--glow-color:rgba(6,182,212,0.4)] [--border-glow-color:rgba(165,243,252,0.3)] dark:[--border-glow-color:rgba(6,182,212,0.6)] [--glow-blend:soft-light] dark:[--glow-blend:normal]',
+                  indigo: 'hover:border-indigo-500/30 hover:shadow-[0_0_20px_-5px_rgba(199,210,254,0.1)] dark:hover:shadow-[0_0_35px_-5px_rgba(99,102,241,0.4)] [--glow-color:rgba(199,210,254,0.1)] dark:[--glow-color:rgba(99,102,241,0.4)] [--border-glow-color:rgba(199,210,254,0.3)] dark:[--border-glow-color:rgba(99,102,241,0.6)] [--glow-blend:soft-light] dark:[--glow-blend:normal]',
+                  rose: 'hover:border-rose-500/30 hover:shadow-[0_0_20px_-5px_rgba(254,205,211,0.1)] dark:hover:shadow-[0_0_35px_-5px_rgba(244,63,94,0.4)] [--glow-color:rgba(254,205,211,0.1)] dark:[--glow-color:rgba(244,63,94,0.4)] [--border-glow-color:rgba(254,205,211,0.3)] dark:[--border-glow-color:rgba(244,63,94,0.6)] [--glow-blend:soft-light] dark:[--glow-blend:normal]',
+                  amber: 'hover:border-amber-500/30 hover:shadow-[0_0_20px_-5px_rgba(253,230,138,0.1)] dark:hover:shadow-[0_0_35px_-5px_rgba(245,158,11,0.4)] [--glow-color:rgba(253,230,138,0.1)] dark:[--glow-color:rgba(245,158,11,0.4)] [--border-glow-color:rgba(253,230,138,0.3)] dark:[--border-glow-color:rgba(245,158,11,0.6)] [--glow-blend:soft-light] dark:[--glow-blend:normal]',
+                  emerald: 'hover:border-emerald-500/30 hover:shadow-[0_0_20px_-5px_rgba(167,243,208,0.1)] dark:hover:shadow-[0_0_35px_-5px_rgba(16,185,129,0.4)] [--glow-color:rgba(167,243,208,0.1)] dark:[--glow-color:rgba(16,185,129,0.4)] [--border-glow-color:rgba(167,243,208,0.3)] dark:[--border-glow-color:rgba(16,185,129,0.6)] [--glow-blend:soft-light] dark:[--glow-blend:normal]',
+                  sky: 'hover:border-sky-500/30 hover:shadow-[0_0_20px_-5px_rgba(186,230,253,0.1)] dark:hover:shadow-[0_0_35px_-5px_rgba(14,165,233,0.4)] [--glow-color:rgba(186,230,253,0.1)] dark:[--glow-color:rgba(14,165,233,0.4)] [--border-glow-color:rgba(186,230,253,0.3)] dark:[--border-glow-color:rgba(14,165,233,0.6)] [--glow-blend:soft-light] dark:[--glow-blend:normal]',
+                  violet: 'hover:border-violet-500/30 hover:shadow-[0_0_20px_-5px_rgba(221,214,254,0.1)] dark:hover:shadow-[0_0_35px_-5px_rgba(139,92,246,0.4)] [--glow-color:rgba(221,214,254,0.1)] dark:[--glow-color:rgba(139,92,246,0.4)] [--border-glow-color:rgba(221,214,254,0.3)] dark:[--border-glow-color:rgba(139,92,246,0.6)] [--glow-blend:soft-light] dark:[--glow-blend:normal]',
+                };
 
-              return (
-                <motion.div
-                  key={service.title}
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ duration: 0.3, ease: "easeInOut" }}
-                  className="h-full"
-                >
-                  <SpotlightCard className={`p-0 group overflow-hidden transition-all duration-300 ${glowStyles[service.color || 'cyan']}`}>
-                    <div className="flex flex-col h-full">
-                      <div className="relative h-48 overflow-hidden border-b border-brand-border flex items-center justify-center">
-                        <NandutiSun
-                          seed={idx}
-                          className="h-44 w-44 text-brand-primary opacity-40 group-hover:opacity-80 group-hover:rotate-[15deg] transition-all duration-700 ease-out"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-brand-bg/80 to-transparent pointer-events-none" />
-                        <div className="absolute bottom-4 left-6 w-12 h-12 rounded-xl bg-brand-primary/20 backdrop-blur-md border border-brand-border flex items-center justify-center text-brand-primary group-hover:scale-110 transition-transform duration-500">
-                          <Icon size={24} />
+                return (
+                  <motion.div
+                    key={service.title}
+                    whileHover={{ scale: 1.02 }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                    className="h-full"
+                  >
+                    <SpotlightCard className={`p-0 group overflow-hidden transition-all duration-300 ${glowStyles[service.color || 'cyan']}`}>
+                      <div className="flex flex-col h-full">
+                        <div className="relative h-48 overflow-hidden border-b border-brand-border flex items-center justify-center">
+                          <NandutiSun
+                            seed={idx}
+                            className="h-44 w-44 text-brand-primary opacity-40 group-hover:opacity-80 group-hover:rotate-[15deg] transition-all duration-700 ease-out"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-brand-bg/80 to-transparent pointer-events-none" />
+                          <div className="absolute bottom-4 left-6 w-12 h-12 rounded-xl bg-brand-primary/20 backdrop-blur-md border border-brand-border flex items-center justify-center text-brand-primary group-hover:scale-110 transition-transform duration-500">
+                            <Icon size={24} />
+                          </div>
+                        </div>
+                        <div className="p-8 flex flex-col flex-grow">
+                          {/* El entregable queda como etiqueta y el titular es el
+                              problema dicho por el cliente, no la categoria tecnica. */}
+                          <span className="text-[10px] font-bold uppercase tracking-widest text-brand-primary mb-3">
+                            {serviceContent.title}
+                          </span>
+                          <h3 className="text-xl font-bold mb-3 font-display text-balance">
+                            {serviceContent.problem}
+                          </h3>
+                          <p className="text-brand-muted text-base leading-relaxed text-balance">
+                            {serviceContent.description}
+                          </p>
                         </div>
                       </div>
-                      <div className="p-8 flex flex-col flex-grow">
-                        {/* El entregable queda como etiqueta y el titular es el
-                            problema dicho por el cliente, no la categoria tecnica. */}
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-brand-primary mb-3">
-                          {serviceContent.title}
-                        </span>
-                        <h3 className="text-xl font-bold mb-3 font-display text-balance">
-                          {serviceContent.problem}
-                        </h3>
-                        <p className="text-brand-muted text-base leading-relaxed text-balance">
-                          {serviceContent.description}
-                        </p>
-                      </div>
+                    </SpotlightCard>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </div>
+        </motion.section>
+
+        {/* Como trabajo: responde "que pasa si te escribo" apenas el visitante
+            termina de ver que hacés, que es cuando se lo pregunta. */}
+        <motion.section
+          id="process"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={sectionVariants}
+          className="relative overflow-hidden py-20"
+        >
+          <div className="relative z-10 mx-auto w-full max-w-7xl px-6 md:px-12 lg:px-24">
+            <div className="mb-20">
+              <h2 className="text-4xl md:text-6xl font-display font-bold mb-6 text-balance">{content.processTitle}</h2>
+              <RevealText
+                key={`process-subtitle-${lang}`}
+                text={content.processSubtitle}
+                className="text-xl text-brand-muted max-w-2xl text-balance"
+              />
+            </div>
+
+            <ol className="relative grid gap-12 md:grid-cols-3 md:gap-8">
+              {/* Hilo que une los tres pasos, al modo del radio de un ñandutí. */}
+              <span
+                aria-hidden="true"
+                className="hidden md:block absolute left-0 right-0 top-7 h-px bg-gradient-to-r from-brand-primary/40 via-brand-primary/20 to-transparent"
+              />
+
+              {PROCESS.map((step, idx) => {
+                const StepIcon = ICONS[step.icon as keyof typeof ICONS];
+                const stepContent = content.processList[idx];
+
+                return (
+                  <li key={stepContent.title} className="relative flex flex-col">
+                    <div className="flex items-center gap-4 mb-6">
+                      <span className="relative z-10 flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-brand-primary/30 bg-brand-bg text-brand-primary">
+                        <StepIcon size={22} />
+                      </span>
+                      <span className="font-display text-5xl font-bold leading-none text-brand-primary/20">
+                        {idx + 1}
+                      </span>
                     </div>
-                  </SpotlightCard>
-                </motion.div>
-              );
-            })}
+                    <h3 className="mb-3 font-display text-xl font-bold text-balance">{stepContent.title}</h3>
+                    <p className="text-brand-muted leading-relaxed text-balance">{stepContent.description}</p>
+                  </li>
+                );
+              })}
+            </ol>
           </div>
-        </div>
-      </motion.section>
+        </motion.section>
 
-      {/* Como trabajo: responde "que pasa si te escribo" apenas el visitante
-          termina de ver que hacés, que es cuando se lo pregunta. */}
-      <motion.section
-        id="process"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-        variants={sectionVariants}
-        className="relative overflow-hidden py-20"
-      >
-        <div className="relative z-10 mx-auto w-full max-w-7xl px-6 md:px-12 lg:px-24">
-          <div className="mb-20">
-            <h2 className="text-4xl md:text-6xl font-display font-bold mb-6 text-balance">{content.processTitle}</h2>
-            <RevealText
-              key={`process-subtitle-${lang}`}
-              text={content.processSubtitle}
-              className="text-xl text-brand-muted max-w-2xl text-balance"
-            />
-          </div>
-
-          <ol className="relative grid gap-12 md:grid-cols-3 md:gap-8">
-            {/* Hilo que une los tres pasos, al modo del radio de un ñandutí. */}
-            <span
-              aria-hidden="true"
-              className="hidden md:block absolute left-0 right-0 top-7 h-px bg-gradient-to-r from-brand-primary/40 via-brand-primary/20 to-transparent"
-            />
-
-            {PROCESS.map((step, idx) => {
-              const StepIcon = ICONS[step.icon as keyof typeof ICONS];
-              const stepContent = content.processList[idx];
-
-              return (
-                <li key={stepContent.title} className="relative flex flex-col">
-                  <div className="flex items-center gap-4 mb-6">
-                    <span className="relative z-10 flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-brand-primary/30 bg-brand-bg text-brand-primary">
-                      <StepIcon size={22} />
-                    </span>
-                    <span className="font-display text-5xl font-bold leading-none text-brand-primary/20">
-                      {idx + 1}
-                    </span>
-                  </div>
-                  <h3 className="mb-3 font-display text-xl font-bold text-balance">{stepContent.title}</h3>
-                  <p className="text-brand-muted leading-relaxed text-balance">{stepContent.description}</p>
-                </li>
-              );
-            })}
-          </ol>
-        </div>
-      </motion.section>
-
-      {/* Why Me Section - Bento Grid */}
-      <motion.section
-        id="whyme"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-        variants={sectionVariants}
-        className="py-20"
-      >
-        <div className="mx-auto w-full max-w-7xl px-6 md:px-12 lg:px-24">
-          <div className="mb-20">
-            <h2 className="text-4xl md:text-6xl font-display font-bold mb-8 text-balance">{content.whyMeTitle}</h2>
-            <RevealText 
-              key={`whyme-subtitle-${lang}`}
-              text={content.whyMeSubtitle}
-              className="text-xl text-brand-muted max-w-3xl text-balance"
-            />
-          </div>
+        {/* Why Me Section - Bento Grid */}
+        <motion.section
+          id="whyme"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={sectionVariants}
+          className="py-20"
+        >
+          <div className="mx-auto w-full max-w-7xl px-6 md:px-12 lg:px-24">
+            <div className="mb-20">
+              <h2 className="text-4xl md:text-6xl font-display font-bold mb-8 text-balance">{content.whyMeTitle}</h2>
+              <RevealText 
+                key={`whyme-subtitle-${lang}`}
+                text={content.whyMeSubtitle}
+                className="text-xl text-brand-muted max-w-3xl text-balance"
+              />
+            </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {WHY_ME.map((item, idx) => {
-              const Icon = ICONS[item.icon as keyof typeof ICONS];
-              const whyMeContent = content.whyMeList[idx];
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {WHY_ME.map((item, idx) => {
+                const Icon = ICONS[item.icon as keyof typeof ICONS];
+                const whyMeContent = content.whyMeList[idx];
               
-              return (
-                <motion.div
-                  key={item.title}
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ duration: 0.3, ease: "easeInOut" }}
-                >
-                  <SpotlightCard 
-                    className="p-10 flex flex-col justify-between h-full transition-all duration-300 hover:border-emerald-500/30 hover:shadow-[0_0_20px_-5px_rgba(167,243,208,0.1)] dark:hover:shadow-[0_0_35px_-5px_rgba(16,185,129,0.4)] [--glow-color:rgba(167,243,208,0.1)] dark:[--glow-color:rgba(16,185,129,0.4)] [--border-glow-color:rgba(167,243,208,0.3)] dark:[--border-glow-color:rgba(16,185,129,0.6)] [--glow-blend:soft-light] dark:[--glow-blend:normal]"
+                return (
+                  <motion.div
+                    key={item.title}
+                    whileHover={{ scale: 1.02 }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
                   >
-                    <div>
-                      <div className="w-12 h-12 rounded-xl bg-brand-secondary/10 flex items-center justify-center text-brand-secondary mb-8">
-                        <Icon size={24} />
+                    <SpotlightCard 
+                      className="p-10 flex flex-col justify-between h-full transition-all duration-300 hover:border-emerald-500/30 hover:shadow-[0_0_20px_-5px_rgba(167,243,208,0.1)] dark:hover:shadow-[0_0_35px_-5px_rgba(16,185,129,0.4)] [--glow-color:rgba(167,243,208,0.1)] dark:[--glow-color:rgba(16,185,129,0.4)] [--border-glow-color:rgba(167,243,208,0.3)] dark:[--border-glow-color:rgba(16,185,129,0.6)] [--glow-blend:soft-light] dark:[--glow-blend:normal]"
+                    >
+                      <div>
+                        <div className="w-12 h-12 rounded-xl bg-brand-secondary/10 flex items-center justify-center text-brand-secondary mb-8">
+                          <Icon size={24} />
+                        </div>
+                        <h3 className="font-bold mb-4 font-display text-xl text-balance">{whyMeContent.title}</h3>
+                        <p className="text-brand-muted leading-relaxed text-lg text-balance">{whyMeContent.description}</p>
                       </div>
-                      <h4 className="font-bold mb-4 font-display text-xl text-balance">{whyMeContent.title}</h4>
-                      <p className="text-brand-muted leading-relaxed text-lg text-balance">{whyMeContent.description}</p>
-                    </div>
-                  </SpotlightCard>
-                </motion.div>
-              );
-            })}
+                    </SpotlightCard>
+                  </motion.div>
+                );
+              })}
+            </div>
           </div>
-        </div>
-      </motion.section>
+        </motion.section>
 
-      {/* Sobre mi. Antes era la seccion "Descargar CV" y ocupaba una pantalla
-          entera: el CV dejo de ser la oferta y pasó a ser el respaldo. */}
-      <motion.section
-        id="about"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-        variants={sectionVariants}
-        className="section-tint relative overflow-hidden py-20"
-      >
-        <NandutiSun
-          seed={1}
-          className="pointer-events-none absolute -right-16 -top-16 h-72 w-72 text-brand-primary opacity-[0.12]"
-        />
-        <div className="relative z-10 mx-auto w-full max-w-3xl px-6 md:px-12 lg:px-24">
-          <h2 className="text-4xl md:text-5xl font-display font-bold mb-8 text-balance">{content.aboutTitle}</h2>
-          <p className="text-xl text-brand-muted leading-relaxed mb-8 text-balance">
-            {content.aboutText}
-          </p>
-          <p className="text-base text-brand-muted leading-relaxed mb-6 text-balance">
-            {content.aboutCv}
-          </p>
-          <a
-            href={cvFile}
-            download="CV_Osmar_Gimenez.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group inline-flex items-center gap-2 text-sm font-semibold text-brand-primary underline-offset-4 hover:underline"
-          >
-            <ICONS.Download size={16} className="transition-transform group-hover:translate-y-0.5" />
-            {content.cvButton}
-          </a>
-        </div>
-      </motion.section>
-
-      {/* Stack como carrusel: dos carriles que corren en sentidos opuestos.
-          Se ven las 26 tecnologias de un vistazo, con el glifo real de cada
-          marca, y ocupa un tercio de lo que ocupaba la grilla de tarjetas. */}
-      <section
-        id="stack"
-        className="section-tint relative overflow-hidden py-20"
-      >
-        {/* El carrusel vive dentro del mismo contenedor que el resto: a borde
-            completo hacia que las demas secciones se vieran angostas. */}
-        <div className="relative z-10 mx-auto w-full max-w-7xl px-6 md:px-12 lg:px-24">
-          <div className="mb-10">
-            <h2 className="font-display text-2xl font-bold tracking-tight">
-              {content.stackToggle}
-            </h2>
-            <p className="mt-1 text-sm text-brand-muted">{content.stackHint}</p>
-          </div>
-
-          <TechMarquee />
-        </div>
-      </section>
-
-      {/* Contact Section */}
-      <motion.section 
-        id="contact" 
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-        variants={sectionVariants}
-        className="relative overflow-hidden py-20 text-center"
-      >
-        <div className="absolute inset-0 bg-mesh-gradient opacity-20 pointer-events-none" />
-        <div className="relative z-10 mx-auto w-full max-w-4xl px-6 md:px-12 lg:px-24">
-          <h2 className="text-5xl md:text-7xl mb-10 font-display font-bold leading-tight tracking-tight text-balance">
-            {content.contactTitle}
-          </h2>
-          <RevealText 
-            key={`contact-subtitle-${lang}`}
-            text={content.contactSubtitle}
-            className="text-2xl text-brand-muted mb-16 font-light justify-center text-balance"
+        {/* Sobre mi. Antes era la seccion "Descargar CV" y ocupaba una pantalla
+            entera: el CV dejo de ser la oferta y pasó a ser el respaldo. */}
+        <motion.section
+          id="about"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={sectionVariants}
+          className="section-tint relative overflow-hidden py-20"
+        >
+          <NandutiSun
+            seed={1}
+            className="pointer-events-none absolute -right-16 -top-16 h-72 w-72 text-brand-primary opacity-[0.12]"
           />
+          <div className="relative z-10 mx-auto w-full max-w-3xl px-6 md:px-12 lg:px-24">
+            <h2 className="text-4xl md:text-5xl font-display font-bold mb-8 text-balance">{content.aboutTitle}</h2>
+            <p className="text-xl text-brand-muted leading-relaxed mb-8 text-balance">
+              {content.aboutText}
+            </p>
+            <p className="text-base text-brand-muted leading-relaxed mb-6 text-balance">
+              {content.aboutCv}
+            </p>
+            <a
+              href={cvFile}
+              download="CV_Osmar_Gimenez.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center gap-2 text-sm font-semibold text-brand-primary underline-offset-4 hover:underline"
+            >
+              <ICONS.Download size={16} className="transition-transform group-hover:translate-y-0.5" />
+              {content.cvButton}
+            </a>
+          </div>
+        </motion.section>
+
+        {/* Stack como carrusel: dos carriles que corren en sentidos opuestos.
+            Se ven las 26 tecnologias de un vistazo, con el glifo real de cada
+            marca, y ocupa un tercio de lo que ocupaba la grilla de tarjetas. */}
+        <section
+          id="stack"
+          className="section-tint relative overflow-hidden py-20"
+        >
+          {/* El carrusel vive dentro del mismo contenedor que el resto: a borde
+              completo hacia que las demas secciones se vieran angostas. */}
+          <div className="relative z-10 mx-auto w-full max-w-7xl px-6 md:px-12 lg:px-24">
+            <div className="mb-10">
+              <h2 className="font-display text-2xl font-bold tracking-tight">
+                {content.stackToggle}
+              </h2>
+              <p className="mt-1 text-sm text-brand-muted">{content.stackHint}</p>
+            </div>
+
+            <TechMarquee />
+          </div>
+        </section>
+
+        {/* Contact Section */}
+        <motion.section 
+          id="contact" 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={sectionVariants}
+          className="relative overflow-hidden py-20 text-center"
+        >
+          <div className="absolute inset-0 bg-mesh-gradient opacity-20 pointer-events-none" />
+          <div className="relative z-10 mx-auto w-full max-w-4xl px-6 md:px-12 lg:px-24">
+            <h2 className="text-5xl md:text-7xl mb-10 font-display font-bold leading-tight tracking-tight text-balance">
+              {content.contactTitle}
+            </h2>
+            <RevealText 
+              key={`contact-subtitle-${lang}`}
+              text={content.contactSubtitle}
+              className="text-2xl text-brand-muted mb-16 font-light justify-center text-balance"
+            />
           
-          <div className="flex flex-col md:flex-row justify-center gap-8 mb-16">
-            {WHATSAPP_URL && (
+            <div className="flex flex-col md:flex-row justify-center gap-8 mb-16">
+              {WHATSAPP_URL && (
+                <MagneticButton>
+                  <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="btn-whatsapp flex items-center justify-center gap-4 whitespace-nowrap px-12 py-6 text-xl font-bold">
+                    <BrandIcon slug="whatsapp" size={26} /> WhatsApp
+                  </a>
+                </MagneticButton>
+              )}
               <MagneticButton>
-                <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="btn-whatsapp flex items-center justify-center gap-4 whitespace-nowrap px-12 py-6 text-xl font-bold">
-                  <BrandIcon slug="whatsapp" size={26} /> WhatsApp
+                <a href={`mailto:${CONTACT_INFO.email}`} className="btn-secondary flex items-center justify-center gap-4 px-12 py-6 text-xl font-bold whitespace-nowrap">
+                  <ICONS.Mail size={26} /> {content.contactPrimary}
                 </a>
               </MagneticButton>
-            )}
-            <MagneticButton>
-              <a href={`mailto:${CONTACT_INFO.email}`} className="btn-secondary flex items-center justify-center gap-4 px-12 py-6 text-xl font-bold whitespace-nowrap">
-                <ICONS.Mail size={26} /> {content.contactPrimary}
-              </a>
-            </MagneticButton>
-            <MagneticButton>
-              <a href={CONTACT_INFO.linkedin} target="_blank" rel="noopener noreferrer" className="btn-secondary flex items-center justify-center gap-4 px-12 py-6 text-xl font-bold border-white/10 hover:bg-white/5 whitespace-nowrap">
-                <ICONS.Linkedin size={26} /> {content.contactSecondary}
-              </a>
-            </MagneticButton>
-          </div>
-
-          <div className="flex flex-wrap justify-center gap-8 pt-12">
-            <div className="flex items-center gap-3 px-5 py-2.5 bg-brand-card border border-brand-border rounded-full text-sm font-medium text-brand-muted text-balance">
-              <ICONS.MapPin size={18} className="text-brand-primary" /> {content.badge1}
+              <MagneticButton>
+                <a href={CONTACT_INFO.linkedin} target="_blank" rel="noopener noreferrer" className="btn-secondary flex items-center justify-center gap-4 px-12 py-6 text-xl font-bold border-white/10 hover:bg-white/5 whitespace-nowrap">
+                  <ICONS.Linkedin size={26} /> {content.contactSecondary}
+                </a>
+              </MagneticButton>
             </div>
-            <div className="flex items-center gap-3 px-5 py-2.5 bg-brand-card border border-brand-border rounded-full text-sm font-medium text-brand-muted text-balance">
-              <ICONS.ShieldCheck size={18} className="text-brand-secondary" /> {content.badge2}
+
+            <div className="flex flex-wrap justify-center gap-8 pt-12">
+              <div className="flex items-center gap-3 px-5 py-2.5 bg-brand-card border border-brand-border rounded-full text-sm font-medium text-brand-muted text-balance">
+                <ICONS.MapPin size={18} className="text-brand-primary" /> {content.badge1}
+              </div>
+              <div className="flex items-center gap-3 px-5 py-2.5 bg-brand-card border border-brand-border rounded-full text-sm font-medium text-brand-muted text-balance">
+                <ICONS.ShieldCheck size={18} className="text-brand-secondary" /> {content.badge2}
+              </div>
             </div>
           </div>
-        </div>
-      </motion.section>
+        </motion.section>
 
-      {/* Footer */}
+        {/* Footer */}
+      </main>
+
       <footer className="relative z-10 py-20">
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-12 text-center md:text-left">
           <div className="flex flex-col items-center md:items-start">
@@ -741,17 +764,21 @@ export default function App() {
           
           <div className="flex gap-10">
             <a 
-              href="https://github.com/OsmarGimenez" 
-              target="_blank" 
-              rel="noopener noreferrer" 
+              href="https://github.com/OsmarGimenez"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub de Osmar Giménez"
+
               className="group relative p-4 bg-slate-100 dark:bg-white/5 rounded-2xl border border-slate-300 dark:border-white/10 transition-all duration-300 hover:border-slate-400 dark:hover:border-slate-500 hover:shadow-xl dark:hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] text-slate-950 dark:text-slate-400"
             >
               <ICONS.Github size={32} strokeWidth={2} className="lucide stroke-currentColor transition-colors" />
             </a>
             <a 
-              href={CONTACT_INFO.linkedin} 
-              target="_blank" 
-              rel="noopener noreferrer" 
+              href={CONTACT_INFO.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn de Osmar Giménez"
+
               className="group relative p-4 bg-brand-primary/10 dark:bg-brand-primary/5 rounded-2xl border border-brand-primary/30 dark:border-brand-primary/10 transition-all duration-300 hover:border-slate-400 dark:hover:border-slate-500 hover:shadow-xl dark:hover:shadow-[0_0_20px_rgba(59,130,246,0.2)] text-slate-950 dark:text-slate-400"
             >
               <ICONS.Linkedin size={32} strokeWidth={2} className="lucide stroke-currentColor transition-colors" />

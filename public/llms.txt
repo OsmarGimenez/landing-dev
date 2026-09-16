@@ -1,0 +1,33 @@
+# Osmar Giménez — Desarrollador de software
+
+> Desarrollador de software independiente radicado en Paraguay. Construye
+> landing pages, catálogos web, tiendas online, integraciones y APIs, e
+> implementa Odoo para pequeñas y medianas empresas. Se trabaja directamente
+> con él: sin agencia ni intermediarios.
+
+El trabajo arranca con una llamada de 20 minutos sin compromiso, sigue con una
+propuesta de precio cerrado y plazo por escrito, y se desarrolla con entregas
+semanales.
+
+## Servicios
+
+- [Landing page](https://osmargimenezdev.vercel.app/#services): una sola página con un solo objetivo, que quien llega escriba. Rápida y pensada para celular.
+- [Catálogo web](https://osmargimenezdev.vercel.app/#services): productos online siempre actualizados, con botón de WhatsApp en cada uno, sin carrito ni checkout.
+- [Tienda online](https://osmargimenezdev.vercel.app/#services): ciclo de compra completo con carrito, pagos, stock y pedidos.
+- [Integraciones y APIs](https://osmargimenezdev.vercel.app/#services): conectar tienda, ERP y demás sistemas para dejar de pasar datos a mano.
+- [Optimización de base de datos](https://osmargimenezdev.vercel.app/#services): diagnóstico y corrección de consultas, índices y estructura.
+- [Automatizaciones](https://osmargimenezdev.vercel.app/#services): reportes, respaldos, despliegues y tareas repetitivas desatendidas.
+- [Implementación de Odoo](https://osmargimenezdev.vercel.app/#services): migración, configuración y soporte para unificar stock, ventas y facturación.
+
+## Contacto
+
+- [WhatsApp](https://wa.me/595986544857): vía de contacto principal.
+- [Correo](mailto:osmar_gimenez@outlook.com): consultas por escrito.
+- [LinkedIn](https://www.linkedin.com/in/osmar-gimenez-5971b0187/): trayectoria profesional.
+- [GitHub](https://github.com/OsmarGimenez): código público.
+
+## Opcional
+
+- [Cómo trabajo](https://osmargimenezdev.vercel.app/#process): los tres pasos del proceso, de la llamada a las entregas semanales.
+- [Sobre mí](https://osmargimenezdev.vercel.app/#about): con quién se trabaja y enlace al CV completo.
+- [Tecnologías](https://osmargimenezdev.vercel.app/#stack): stack de backend, frontend, bases de datos y DevOps.

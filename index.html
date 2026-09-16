@@ -30,7 +30,12 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- display=optional en lugar de swap: con swap el navegador dibuja primero
+         con la fuente de reserva y despues la reemplaza, y ese reemplazo mueve
+         el titular. Era el origen del CLS de 0.13 que marcaba Lighthouse.
+         Con optional no hay reemplazo: si la fuente no llega a tiempo se usa la
+         de reserva por esa visita y queda cacheada para la siguiente. -->
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&display=optional" rel="stylesheet">
   </head>
   <body>
     <div id="root"></div>

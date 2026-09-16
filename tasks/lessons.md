@@ -61,3 +61,36 @@ Formato por entrada:
 - **Regla derivada:** antes de declarar roto un estilo animado o con
   transición, medirlo con las transiciones desactivadas. Una captura negra o un
   valor que no cambia es, casi siempre, el panel y no la página.
+
+## 2026-09-15 — Auditar con extensiones del navegador puestas
+- **Qué pasó:** el informe de Lighthouse traía Performance 94 y cifras como
+  «unused JavaScript: 4.458 KiB» sobre un bundle de 418 kB. El propio informe
+  avisaba que había extensiones afectando la corrida.
+- **Corrección:** se volvió a auditar contra el build local sin extensiones, y
+  el diagnóstico real era distinto: Accesibilidad 79 (no 82) y Best Practices
+  100 en vez de 81, porque esos cuatro fallos eran de cabeceras de producción.
+- **Regla derivada:** un informe hecho con extensiones sirve para saber QUÉ
+  falla, no CUÁNTO. Antes de optimizar contra un número, reproducirlo en
+  limpio. Si una cifra no cuadra con lo que se sabe del proyecto, sospechar de
+  la medición antes que del código.
+
+## 2026-09-15 — Un icono no es un nombre accesible
+- **Qué pasó:** el botón de tema y los enlaces de GitHub y LinkedIn del pie
+  llevaban solo un icono, sin texto ni `aria-label`. Para un lector de pantalla
+  no tenían nombre. El CTA del nav tenía el mismo problema, pero solo en móvil,
+  donde el texto se oculta y queda el icono.
+- **Corrección:** `aria-label` en todos, y en el del nav uno fijo que no
+  dependa del breakpoint.
+- **Regla derivada:** todo control que pueda quedar sin texto visible —siempre
+  o en algún breakpoint— lleva `aria-label`. Revisar en particular los que
+  esconden el texto con `hidden md:inline`: una auditoría de escritorio no los
+  detecta.
+
+## 2026-09-15 — El intercambio de fuente mueve la página
+- **Qué pasó:** CLS de 0.13 en producción. La traza señaló las dos fuentes:
+  con `display=swap` el navegador dibuja con la de reserva y después la
+  reemplaza, y ese reemplazo empuja el titular y el hero entero. En local daba
+  0.03 porque no hay latencia y ya están cacheadas.
+- **Corrección:** `display=optional`, que no reemplaza nunca. CLS 0.00.
+- **Regla derivada:** medir el CLS con latencia real o asumir que el local
+  miente. Ante un CLS sin causa visible, sospechar primero de las fuentes web.

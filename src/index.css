@@ -295,15 +295,26 @@
 /* Boton de WhatsApp con la identidad de la app: su verde oficial (#25D366) y
    el verde oscuro de marca al pasar por encima. Antes usaba el azul primario
    con un bocadillo generico, que no lo hacia reconocible de un vistazo. */
+/* Boton de WhatsApp.
+
+   El verde #25D366 es el de la marca y es lo que lo hace reconocible de un
+   vistazo, asi que se conserva. Lo que cambia es el texto: en blanco daba
+   1.98 de contraste, muy por debajo del 4.5 que pide WCAG, y Lighthouse lo
+   marcaba. En verde casi negro da 7.52 y sigue siendo fiel a la marca, que
+   usa texto oscuro sobre verde en sus propias burbujas.
+
+   El boton flotante es aparte: solo lleva el glifo, sin texto, asi que
+   conserva el blanco sobre verde que es su forma canonica. */
 @layer components {
   .btn-whatsapp {
-    @apply px-6 py-3 border-2 border-transparent rounded-lg font-semibold text-white transition-all duration-300 active:scale-95;
+    @apply px-6 py-3 border-2 border-transparent rounded-lg font-semibold transition-all duration-300 active:scale-95;
     background-color: #25d366;
+    color: #052e16;
     box-shadow: 0 10px 30px -10px rgba(37, 211, 102, 0.55);
   }
 
   .btn-whatsapp:hover {
-    background-color: #1da851;
+    background-color: #1fbb5c;
   }
 }
 
