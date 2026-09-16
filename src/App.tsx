@@ -1,7 +1,7 @@
 import { MotionConfig, motion, useScroll, useTransform } from 'motion/react';
 import React, { useState, useEffect, useRef } from 'react';
 import cvFile from './CV-Osmar-Gimenez.pdf';
-import { ICONS, SERVICES, PROCESS, WHY_ME, CONTACT_INFO, WHATSAPP_URL } from './constants';
+import { ICONS, SERVICES, PROCESS, WHY_ME, CONTACT_INFO, WHATSAPP_ACTIVO, whatsappUrl } from './constants';
 import {
   SpotlightCard,
   MagneticButton,
@@ -315,9 +315,9 @@ export default function App() {
        agitaba, y Lighthouse no lo mide. */
     <MotionConfig reducedMotion="user">
     <div className="min-h-screen selection:bg-brand-primary/30 overflow-x-hidden bg-brand-bg font-sans text-brand-text transition-colors duration-500">
-      {WHATSAPP_URL && (
+      {WHATSAPP_ACTIVO && (
         <a
-          href={WHATSAPP_URL}
+          href={whatsappUrl('flotante', lang)}
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Escribir por WhatsApp"
@@ -467,9 +467,9 @@ export default function App() {
                   {/* El principal abre la conversacion directamente; mandar al
                       visitante a scrollear hasta contacto pierde gente. */}
                   <MagneticButton className="w-full sm:w-auto">
-                    {WHATSAPP_URL ? (
+                    {WHATSAPP_ACTIVO ? (
                       <a
-                        href={WHATSAPP_URL}
+                        href={whatsappUrl('hero', lang)}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="btn-whatsapp flex w-full items-center justify-center gap-3 px-8 py-4 text-base font-bold sm:w-auto sm:px-10 sm:py-5 sm:text-lg"
@@ -753,9 +753,9 @@ export default function App() {
             />
           
             <div className="flex flex-col md:flex-row justify-center gap-8 mb-16">
-              {WHATSAPP_URL && (
+              {WHATSAPP_ACTIVO && (
                 <MagneticButton>
-                  <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="btn-whatsapp flex items-center justify-center gap-4 whitespace-nowrap px-12 py-6 text-xl font-bold">
+                  <a href={whatsappUrl('contacto', lang)} target="_blank" rel="noopener noreferrer" className="btn-whatsapp flex items-center justify-center gap-4 whitespace-nowrap px-12 py-6 text-xl font-bold">
                     <BrandIcon slug="whatsapp" size={26} /> WhatsApp
                   </a>
                 </MagneticButton>

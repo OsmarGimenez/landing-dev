@@ -180,19 +180,46 @@ export const TECH_STACK = [
 ];
 
 // Formato internacional sin signos ni espacios: 595 (Paraguay) + 986544857.
-export const WHATSAPP_NUMBER = "595986544857";
+// Tipado como string y no como literal: vaciarlo tiene que seguir siendo una
+// opcion valida —ahi los botones no se renderizan— y con el literal inferido
+// TypeScript trataba esa comparacion como imposible.
+export const WHATSAPP_NUMBER: string = "595986544857";
 
-export const WHATSAPP_MESSAGE =
-  "Hola Osmar, vi tu sitio y quiero consultarte por un proyecto.";
+/**
+ * Mensaje precargado segun desde donde se toco el boton.
+ *
+ * Los tres botones mandaban el mismo texto, asi que no habia forma de saber
+ * que parte del sitio convierte. Redactados para que se distingan de un
+ * vistazo en la bandeja sin que el que escribe sienta que lo etiquetaron.
+ */
+const MENSAJES = {
+  es: {
+    hero: "Hola Osmar, vi tu sitio y quiero consultarte por un proyecto.",
+    contacto: "Hola Osmar, quiero contarte qué necesito para mi negocio.",
+    flotante: "Hola Osmar, estaba viendo tu sitio y me surgió una consulta.",
+  },
+  en: {
+    hero: "Hi Osmar, I saw your site and I'd like to ask about a project.",
+    contacto: "Hi Osmar, I'd like to tell you what my business needs.",
+    flotante: "Hi Osmar, I was looking at your site and I have a question.",
+  },
+} as const;
 
-export const WHATSAPP_URL = WHATSAPP_NUMBER
-  ? `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`
-  : "";
+export type WhatsappOrigen = keyof (typeof MENSAJES)['es'];
+
+/** Devuelve "" si no hay numero cargado, y ahi el boton no se renderiza. */
+export const whatsappUrl = (origen: WhatsappOrigen, lang: 'es' | 'en' = 'es') =>
+  WHATSAPP_NUMBER
+    ? `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(MENSAJES[lang][origen])}`
+    : "";
+
+/** Solo para saber si hay que renderizar los botones. */
+export const WHATSAPP_ACTIVO = WHATSAPP_NUMBER !== "";
 
 export const CONTACT_INFO = {
   name: "Osmar Gimenez",
   email: "osmar_gimenez@outlook.com",
   linkedin: "https://www.linkedin.com/in/osmar-gimenez-5971b0187/",
   location: "Paraguay (Remote Available)",
-  whatsapp: WHATSAPP_URL
+  whatsapp: whatsappUrl('contacto')
 };

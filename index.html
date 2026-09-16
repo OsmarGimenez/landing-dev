@@ -27,6 +27,61 @@
     <meta property="twitter:description" content="Webs, catálogos digitales, tiendas online e implementaciones Odoo para PyMEs en Paraguay." />
     <meta property="twitter:image" content="https://osmargimenezdev.vercel.app/og-cover.jpg" />
 
+    <!-- Datos estructurados. Es el par del llms.txt: uno lo leen los asistentes
+         de IA, este lo lee Google. Solo datos verificables: sin precios, sin
+         valoraciones y sin cantidad de reseñas, que ademas Google penaliza si
+         no tienen respaldo real. -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Person",
+            "@id": "https://osmargimenezdev.vercel.app/#osmar",
+            "name": "Osmar Giménez",
+            "jobTitle": "Desarrollador de software",
+            "url": "https://osmargimenezdev.vercel.app/",
+            "image": "https://osmargimenezdev.vercel.app/og-cover.jpg",
+            "email": "osmar_gimenez@outlook.com",
+            "address": {
+              "@type": "PostalAddress",
+              "addressCountry": "PY"
+            },
+            "sameAs": [
+              "https://www.linkedin.com/in/osmar-gimenez-5971b0187/",
+              "https://github.com/OsmarGimenez"
+            ],
+            "knowsLanguage": ["es", "en"]
+          },
+          {
+            "@type": "ProfessionalService",
+            "@id": "https://osmargimenezdev.vercel.app/#servicio",
+            "name": "Osmar Giménez — Desarrollo web y Odoo",
+            "url": "https://osmargimenezdev.vercel.app/",
+            "image": "https://osmargimenezdev.vercel.app/og-cover.jpg",
+            "description": "Desarrollo de landing pages, catálogos web, tiendas online, integraciones y APIs, optimización de bases de datos, automatizaciones e implementación de Odoo para PyMEs.",
+            "founder": {"@id": "https://osmargimenezdev.vercel.app/#osmar"},
+            "provider": {"@id": "https://osmargimenezdev.vercel.app/#osmar"},
+            "areaServed": {"@type": "Country", "name": "Paraguay"},
+            "availableLanguage": ["es", "en"],
+            "hasOfferCatalog": {
+              "@type": "OfferCatalog",
+              "name": "Servicios",
+              "itemListElement": [
+                {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Landing page"}},
+                {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Catálogo web"}},
+                {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Tienda online"}},
+                {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Integraciones y APIs"}},
+                {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Optimización de base de datos"}},
+                {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Automatizaciones"}},
+                {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Implementación de Odoo"}}
+              ]
+            }
+          }
+        ]
+      }
+    </script>
+
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 

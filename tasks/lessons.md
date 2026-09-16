@@ -101,3 +101,19 @@ Formato por entrada:
 - **Corrección:** `display=optional`, que no reemplaza nunca. CLS 0.00.
 - **Regla derivada:** medir el CLS con latencia real o asumir que el local
   miente. Ante un CLS sin causa visible, sospechar primero de las fuentes web.
+
+## 2026-09-15 — Una CSP estricta rompe dependencias en silencio, y fuerte
+- **Qué pasó:** al sumar `@vercel/analytics`, la pagina entera quedo en blanco.
+  La libreria asigna una cadena a `script.src`, y `require-trusted-types-for
+  'script'` lo bloquea lanzando un `TypeError`. Como el error sube por el
+  render de React, no fallaba solo la analitica: no se montaba nada. El build
+  y el lint pasaban limpios, asi que sin abrir el navegador se publicaba un
+  sitio en blanco.
+- **Corrección:** no aflojar la CSP, sino declarar una politica `default` de
+  Trusted Types en `src/main.tsx` que solo deja pasar la URL de la analitica, y
+  agregar `trusted-types default` a la CSP en `vercel.json` y en
+  `vite.config.ts`.
+- **Regla derivada:** despues de agregar cualquier dependencia que toque el
+  DOM, cargar la pagina y mirar la consola. Con esta CSP, `lint` y `build`
+  verdes no dicen nada sobre si el sitio arranca. Sospechar en particular de
+  todo lo que inyecte scripts, iframes o estilos.

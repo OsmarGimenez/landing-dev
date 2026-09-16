@@ -27,6 +27,9 @@ const securityHeaders: Record<string, string> = {
     "base-uri 'none'",
     "frame-ancestors 'none'",
     "form-action 'self'",
+    // `trusted-types default` limita la creacion de politicas a esa sola: la
+    // que define src/main.tsx, que solo deja pasar la URL de la analitica.
+    'trusted-types default',
     "require-trusted-types-for 'script'",
     'upgrade-insecure-requests',
   ].join('; '),
