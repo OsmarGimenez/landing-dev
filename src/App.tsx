@@ -11,6 +11,7 @@ import {
   RevealText
 } from './components/AnimatedComponents';
 import { NandutiSun, NandutiHero, NandutiWeave } from './components/Nanduti';
+import { ServiceDiagram } from './components/ServiceDiagram';
 import { BrandIcon } from './components/BrandIcon';
 import { TechMarquee } from './components/TechMarquee';
 
@@ -508,10 +509,13 @@ export default function App() {
                   >
                     <SpotlightCard className={`p-0 group overflow-hidden transition-all duration-300 ${glowStyles[service.color || 'cyan']}`}>
                       <div className="flex flex-col h-full">
+                        {/* El esquema representa el entregable del servicio. El
+                            sol de ñandutí que habia antes era identico en las
+                            siete tarjetas y no decia nada de lo que se vende. */}
                         <div className="relative h-48 overflow-hidden border-b border-brand-border flex items-center justify-center">
-                          <NandutiSun
-                            seed={idx}
-                            className="h-44 w-44 text-brand-primary opacity-40 group-hover:opacity-80 group-hover:rotate-[15deg] transition-all duration-700 ease-out"
+                          <ServiceDiagram
+                            kind={service.diagram}
+                            className="h-40 w-40 text-brand-primary opacity-55 transition-all duration-500 ease-out group-hover:opacity-90 group-hover:scale-[1.06]"
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-brand-bg/80 to-transparent pointer-events-none" />
                           <div className="absolute bottom-4 left-6 w-12 h-12 rounded-xl bg-brand-primary/20 backdrop-blur-md border border-brand-border flex items-center justify-center text-brand-primary group-hover:scale-110 transition-transform duration-500">

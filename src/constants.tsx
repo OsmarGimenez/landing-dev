@@ -74,20 +74,22 @@ export const ICONS = {
   Layout
 };
 
-// Los servicios ya no cargan una foto de stock: la ilustracion de cada tarjeta
-// es un sol de ñanduti generado a partir del indice (ver components/Nanduti).
+// Los servicios no cargan fotos de stock ni listan tecnologias. Al cliente le
+// importa que problema le resolves, no con que lo construis, y el detalle
+// tecnico ya tiene su propia seccion.
 //
-// Tampoco listan tecnologias. Al cliente le importa que problema le resolves,
-// no con que lo construis, y el detalle tecnico ya tiene su propia seccion.
+// `diagram` elige el esquema de components/ServiceDiagram, que representa el
+// entregable. Va como clave explicita y no por indice: asi reordenar la lista
+// no cambia que dibujo le toca a cada servicio.
 export const SERVICES = [
-  {title: "Landing Pages", icon: "Globe", color: "cyan"},
-  {title: "Web Catalogs", icon: "Layers", color: "indigo"},
-  {title: "E-commerce Solutions", icon: "Rocket", color: "rose"},
-  {title: "API Architectures", icon: "Server", color: "amber"},
-  {title: "Database Optimization", icon: "Database", color: "emerald"},
-  {title: "Automations & CI/CD", icon: "Zap", color: "sky"},
-  {title: "Odoo ERP", icon: "Box", color: "violet"}
-];
+  {title: "Landing Pages", diagram: "landing", icon: "Globe", color: "cyan"},
+  {title: "Web Catalogs", diagram: "catalogo", icon: "Layers", color: "indigo"},
+  {title: "E-commerce Solutions", diagram: "tienda", icon: "Rocket", color: "rose"},
+  {title: "API Architectures", diagram: "integraciones", icon: "Server", color: "amber"},
+  {title: "Database Optimization", diagram: "optimizacion", icon: "Database", color: "emerald"},
+  {title: "Automations & CI/CD", diagram: "automatizacion", icon: "Zap", color: "sky"},
+  {title: "Odoo ERP", diagram: "erp", icon: "Box", color: "violet"}
+] as const;
 
 // Los tres pasos de "Como trabajo". El texto vive en las traducciones de
 // App.tsx; aca solo el icono de cada paso.

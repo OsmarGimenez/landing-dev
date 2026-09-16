@@ -47,12 +47,28 @@ intuitivo al pensar en radios.
 
 ## Tres componentes
 
-- **`NandutiSun`** — un sol suelto. Se usa como ilustración de cada tarjeta de
-  servicio, reemplazando las fotos de stock, y como glifo chico en el hero.
+- **`NandutiSun`** — un sol suelto. Se usa como glifo chico en la cabecera del
+  hero y como marca de agua en «Sobre mí».
 - **`NandutiHero`** — tres soles concéntricos girando a 140s, 95s y 60s en
   sentidos alternos. Reemplaza la ilustración plana.
 - **`NandutiWeave`** — trama de fondo con soles chicos repetidos vía
   `<pattern>`. Reemplaza la grilla de puntos.
+
+## Dónde ya no se usa, y por qué
+
+Al principio el sol también ilustraba las siete tarjetas de servicio, en lugar
+de las fotos de stock. Funcionaba como identidad, pero no como información: era
+idéntico en función en las siete y no decía nada de lo que se vende. Un
+visitante que mira «Tienda online» no aprendía nada del dibujo.
+
+Las tarjetas pasaron a usar `ServiceDiagram`, que representa el entregable de
+cada servicio —una página con su botón, una rejilla de productos, dos sistemas
+conectados— en el mismo lenguaje de trazo lineal, así que la coherencia se
+mantiene.
+
+El criterio que quedó: **el ñandutí es marca, no explicación.** Va donde el
+trabajo es identificar el sitio como suyo; donde hay algo que comunicar, va un
+diagrama que lo comunique.
 
 ## Decisiones que conviene no romper
 
